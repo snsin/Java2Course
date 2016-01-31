@@ -35,7 +35,6 @@ public class GenericStack<E> implements Stack<E> {
 		}
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public E peek() {
 		return stack[topOfStack - 1];
