@@ -4,40 +4,41 @@ import java.util.Collection;
 
 public class GenericStack<E> implements Stack<E> {
 	private static final int DEFAULT_STACK_SIZE = 16;
-	private Element<?>[] stack;
+	private E[] stack;
 	private int topOfStack = 0;
 	
+	@SuppressWarnings("unchecked")
 	GenericStack(){
-		this.stack = new Element<?>[DEFAULT_STACK_SIZE];
+		this.stack = (E[]) new Object[DEFAULT_STACK_SIZE];
 	}
+	@SuppressWarnings("unchecked")
 	GenericStack(int size){
-		this.stack = new Element<?>[size];
+		this.stack = (E[]) new Object[size];
 	}
 
 	@Override
 	public void push(E element) throws StackException {
 		if (topOfStack < stack.length) {
-			stack[topOfStack++] = new Element<E>(element);
+			stack[topOfStack++] = element;
 		} else {
 			throw new StackException();
 		}
 		
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public E pop() throws StackException {
 		if (topOfStack < 0) {
 			throw new StackException();
 		} else { 
-			return (E) stack[--topOfStack].getElem();
+			return stack[--topOfStack];
 		}
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public E peek() {
-		return (E) stack[topOfStack - 1].getElem();
+		return stack[topOfStack - 1];
 	}
 
 	@Override

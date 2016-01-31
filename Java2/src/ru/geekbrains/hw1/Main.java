@@ -10,6 +10,7 @@ public class Main {
 			ststr.push("one");
 			ststr.push("two");
 			ststr.push(new Integer(983240189).toString());
+			ststr.push(new Integer(99));
 			while (! ststr.isEmpty()) {
 				System.out.println(ststr.pop());
 			}
