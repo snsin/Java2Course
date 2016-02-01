@@ -11,7 +11,7 @@ public class Main {
 		try {
 			ststr.push("ОГО");
 			ststr.push(new Integer(983240189).toString());
-			while (! ststr.isEmpty()) {
+			while (true) {
 				System.out.println(ststr.pop());
 			}
 		} catch (StackException e) {

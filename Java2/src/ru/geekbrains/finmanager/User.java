@@ -9,13 +9,16 @@ public class User {
 	private boolean loggedIn = false;
 	private List<Account> accounts = new LinkedList<>();
 	
-	public String getName() {
-		return name;
-	}
-	
 	public boolean login(String pass) {
 		this.loggedIn = this.pass == pass.hashCode();
 		return this.loggedIn;
 	}
 
+	public String getName() {
+		return name;
+	}
+	
+	public List<Account> getAccounts() {
+		return accounts;	
+	}
 }

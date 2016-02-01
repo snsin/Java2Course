@@ -21,15 +21,15 @@ public class GenericStack<E> implements Stack<E> {
 		if (topOfStack < stack.length) {
 			stack[topOfStack++] = element;
 		} else {
-			throw new StackException();
+			throw new StackException("Stack is full");
 		}
 		
 	}
 
 	@Override
 	public E pop() throws StackException {
-		if (topOfStack < 0) {
-			throw new StackException();
+		if (topOfStack < 1) {
+			throw new StackException("Stack is empty");
 		} else { 
 			return stack[--topOfStack];
 		}
