@@ -14,19 +14,19 @@ enum Transfer {DEBIT(-1), CDREDIT(1);
 	}
 }
 
-public class Record {
-	private long recordId;
-	private Transfer transfer;
-	private Date date;
-	private double amount;
-	private String description;
+public final class Record {
+	private final int recordId;
+	private final Transfer transfer;
+	private final Date date;
+	private final double amount;
+	private final String description;
 	
-	Record(Transfer transf, double amount, String description) {
-		this.transfer = transf;
+	Record(Transfer transfer, double amount, String description) {
+		this.transfer = transfer;
 		this.amount = amount;
 		this.description = description;
 		this.date = new Date(System.currentTimeMillis());	
-		this.recordId = this.hashCode();
+		this.recordId = super.hashCode();
 	}
 	
 	public int sign() {
@@ -37,4 +37,20 @@ public class Record {
 		return amount;
 	}
 	
+	public Date getDate() {
+		return new Date(date.getTime());
+	}
+	
+	public int getId() {
+		return recordId;
+	}
+	
+	public String getDescription() {
+		return description;
+	}
+	
+	@Override
+	public int hashCode() {
+		return recordId;
+	}
 }

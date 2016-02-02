@@ -1,18 +1,18 @@
 package ru.geekbrains.finmanager;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Account {
-	private long accountId;
+	private final int accountId;
 	private String description;
 	private double balance;
-	private List<Record> records = new ArrayList<>();
+	private Set<Record> records = new HashSet<>();
 	
 	Account(double balance, String description) {
 		this.balance = 0.0;
 		this.description = description;
-		this.accountId = this.hashCode();
+		this.accountId = super.hashCode();
 	}
 	
 	public boolean doTransaction(Record transaction) {
@@ -26,7 +26,7 @@ public class Account {
 		return result;
 	}
 	
-	public long getAccountId() {
+	public long getId() {
 		return accountId;
 	}
 	
@@ -38,9 +38,13 @@ public class Account {
 		return balance;
 	}
 	
-	public List<Record> getRecords() {
+	public Set<Record> getRecords() {
 		return records;
 	}
 	
+	@Override
+	public int hashCode() {
+		return accountId;
+	}
 
 }

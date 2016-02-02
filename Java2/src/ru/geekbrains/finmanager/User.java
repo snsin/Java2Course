@@ -1,13 +1,13 @@
 package ru.geekbrains.finmanager;
 
-import java.util.LinkedList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 public class User {
 	private String name;
 	private int pass;
 	private boolean loggedIn = false;
-	private List<Account> accounts = new LinkedList<>();
+	private Set<Account> accounts = new HashSet<>();
 	
 	public boolean login(String pass) {
 		this.loggedIn = this.pass == pass.hashCode();
@@ -18,7 +18,7 @@ public class User {
 		return name;
 	}
 	
-	public List<Account> getAccounts() {
+	public Set<Account> getAccounts() {
 		return accounts;	
 	}
 }
