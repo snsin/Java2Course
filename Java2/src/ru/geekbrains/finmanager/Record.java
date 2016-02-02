@@ -2,17 +2,7 @@ package ru.geekbrains.finmanager;
 
 import java.util.Date;
 
-enum Transfer {DEBIT(-1), CDREDIT(1);
-	private int sign;
-	
-	Transfer(int sign) {
-		this.sign = sign;
-	}
-	
-	public int sign() {
-		return sign;
-	}
-}
+
 
 public final class Record {
 	private final int recordId;
@@ -21,7 +11,7 @@ public final class Record {
 	private final double amount;
 	private final String description;
 	
-	Record(Transfer transfer, double amount, String description) {
+	public Record(Transfer transfer, double amount, String description) {
 		this.transfer = transfer;
 		this.amount = amount;
 		this.description = description;
