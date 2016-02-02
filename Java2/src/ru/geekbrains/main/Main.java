@@ -1,4 +1,4 @@
-package ru.geekbrains.hw1;
+package ru.geekbrains.main;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Random;
 
 import ru.geekbrains.finmanager.*;
+import ru.geekbrains.hw1.*;
 
 public class Main {
 	public static final Random rnd = new Random();
@@ -48,7 +49,7 @@ public class Main {
 	}
 	
 	public static void tryStack() {
-		GenericStack<String> ststr = new GenericStack<>();
+		Stack<String> ststr = new GenericStack<>();
 		try {
 			ststr.push("test!");
 			ststr.push("is");

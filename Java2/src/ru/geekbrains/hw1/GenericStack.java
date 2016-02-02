@@ -8,7 +8,7 @@ public class GenericStack<E> implements Stack<E> {
 	private int topOfStack = 0;
 	
 	@SuppressWarnings("unchecked")
-	GenericStack(){
+	public GenericStack(){
 		this.stack = (E[]) new Object[DEFAULT_STACK_SIZE];
 	}
 	@SuppressWarnings("unchecked")
