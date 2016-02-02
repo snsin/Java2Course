@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 
 import ru.geekbrains.finmanager.*;
 import ru.geekbrains.hw1.*;
@@ -38,6 +39,23 @@ public class Main {
 		System.out.println("Accounts after\t" + my.getAccounts(current));
 		current.getAccounts().get(2).escape(current.getAccounts().get(2).getRecords().get(1));
 		System.out.println("Accounts very after\t" + my.getAccounts(current));
+		for (int i = 0; i < 20; i++) {
+			current.getAccounts().get(0).conduct(new Record(Transfer.DEBIT, 1000.0, "salary"));
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {};
+			
+		}
+		List<Record> toSort = current.getAccounts().get(0).getRecords();
+		Collections.shuffle(toSort);
+		for (Record rec : toSort) {
+			System.out.println(rec.getDate() + " : " + rec.getId());
+		}
+		Collections.sort(toSort, new RecordDateComparator());
+		System.out.println("Sorted!");
+		for (Record rec : toSort) {
+			System.out.println(rec.getDate() + " : " + rec.getId());
+		}
 		
 	}
 
