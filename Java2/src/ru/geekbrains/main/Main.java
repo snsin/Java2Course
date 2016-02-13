@@ -1,7 +1,10 @@
 package ru.geekbrains.main;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Formatter;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
@@ -16,9 +19,26 @@ public class Main {
 //		tryStack();
 //		tryLengthComp();
 //		tryFinManager();
-	    Category.addCategory("Health");
+/*	    Category.addCategory("Health");
 	    Category cat = new Category("heaLth", "Pills");
-	    System.out.println(cat.getName() + " " + cat.getDescription());
+	    System.out.println(cat.getName() + " " + cat.getDescription());*/
+	    MessageDigest md5sum = null;
+	    try {
+            md5sum = MessageDigest.getInstance("MD5");
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+	    byte[] hash = md5sum.digest("tres".getBytes());
+	    Formatter ff = new Formatter();
+//	    String.
+	    System.out.println(md5sum.digest("ones".getBytes()));
+	    System.out.println(md5sum.digest("ones".getBytes()));
+	    System.out.println(md5sum.digest("tres".getBytes()));
+	    for (byte b : hash) {
+            System.out.printf("%02x", b);
+        }
+	    System.out.println();
+	    System.out.println(md5sum.digest("fsa".getBytes()));
 	}
 	
 	public static void tryFinManager() {
