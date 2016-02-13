@@ -8,13 +8,26 @@ public class Category {
     private static final Set<String> names = 
             new HashSet<String>(Arrays.asList("other"));
     String name = "other";
-    String description;
+    String description = "";
+    
+    public Category() {};
+    
+    public Category(String name) {
+        if (names.contains(name.toLowerCase())) {
+            this.name = name.toLowerCase();
+        }        
+    }
     
     public Category(String name, String description) {
         if (names.contains(name.toLowerCase())) {
-            this.name = name;
+            this.name = name.toLowerCase();
         }
         this.description = description;
+    }
+    
+    public String getName() {
+        char ch = Character.toUpperCase(name.charAt(0));      
+        return name.replaceFirst("^.", Character.toString(ch));
     }
     
     public void setDescription(String description) {

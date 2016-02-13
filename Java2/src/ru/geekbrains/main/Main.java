@@ -13,9 +13,12 @@ public class Main {
 	public static final Random rnd = new Random();
 	
 	public static void main(String[] args) {
-		tryStack();
-		tryLengthComp();
-		tryFinManager();
+//		tryStack();
+//		tryLengthComp();
+//		tryFinManager();
+	    Category.addCategory("Health");
+	    Category cat = new Category("heaLth", "Pills");
+	    System.out.println(cat.getName() + " " + cat.getDescription());
 	}
 	
 	public static void tryFinManager() {
