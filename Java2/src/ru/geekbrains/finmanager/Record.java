@@ -10,13 +10,15 @@ public final class Record {
 	private final Date date;
 	private final double amount;
 	private final String description;
+	private final Category category;
 	
-	public Record(Transfer transfer, double amount, String description) {
+	public Record(Transfer transfer, double amount, String description, Category category) {
 		this.transfer = transfer;
 		this.amount = amount;
 		this.description = description;
 		this.date = new Date(System.currentTimeMillis());	
 		this.recordId = super.hashCode();
+		this.category = category;
 	}
 	
 	public int sign() {

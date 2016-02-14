@@ -22,23 +22,7 @@ public class Main {
 /*	    Category.addCategory("Health");
 	    Category cat = new Category("heaLth", "Pills");
 	    System.out.println(cat.getName() + " " + cat.getDescription());*/
-	    MessageDigest md5sum = null;
-	    try {
-            md5sum = MessageDigest.getInstance("MD5");
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
-	    byte[] hash = md5sum.digest("tres".getBytes());
-	    Formatter ff = new Formatter();
-//	    String.
-	    System.out.println(md5sum.digest("ones".getBytes()));
-	    System.out.println(md5sum.digest("ones".getBytes()));
-	    System.out.println(md5sum.digest("tres".getBytes()));
-	    for (byte b : hash) {
-            System.out.printf("%02x", b);
-        }
-	    System.out.println();
-	    System.out.println(md5sum.digest("fsa".getBytes()));
+
 	}
 	
 	public static void tryFinManager() {
