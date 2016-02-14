@@ -19,10 +19,12 @@ public class Main {
 	    Category cat = new Category("heaLth", "Pills");
 	    System.out.println(cat.getName() + " " + cat.getDescription());*/
 	    try {
+	        System.out.println("Trying JDBC");
             Class.forName("org.postgresql.Driver");
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
+	    System.out.println("Sucsess");
 
 	}
 	
