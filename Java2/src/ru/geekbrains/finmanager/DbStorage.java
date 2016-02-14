@@ -8,8 +8,8 @@ import java.sql.SQLException;
 import java.util.Set;
 
 public class DbStorage implements DataStore {
-    private String user = "postgres";
-    private String password = "sergey";
+    private String user = "test_user";
+    private String password = "12345";
     private String url = "jdbc:postgresql://localhost:5432/test_db"; 
     private String driver = "org.postgresql.Driver";
     
