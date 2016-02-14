@@ -18,6 +18,11 @@ public class Main {
 /*	    Category.addCategory("Health");
 	    Category cat = new Category("heaLth", "Pills");
 	    System.out.println(cat.getName() + " " + cat.getDescription());*/
+	    try {
+            Class.forName("org.postgresql.Driver");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
 
 	}
 	
