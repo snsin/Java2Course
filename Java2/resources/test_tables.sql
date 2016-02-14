@@ -21,9 +21,10 @@ CREATE TABLE IF NOT EXISTS "public"."records" (
 	
 );
 
+drop table "public"."categories";
 drop table "public"."categoies_names";
 
-create table if not exists "public"."categoies_names" (
+create table if not exists "public"."categories_names" (
 	"id" SERIAL PRIMARY KEY,
 	"name" text NOT NULL UNIQUE
 );
@@ -31,7 +32,7 @@ create table if not exists "public"."categoies_names" (
 CREATE TABLE IF NOT EXISTS "public"."categories" (
 	"id" SERIAL PRIMARY KEY,
 	"record_id" integer references "public"."records",
-	"name" text references "public"."categoies_names" ("name"),
+	"name" text references "public"."categories_names" ("name"),
 	"description" text
 );
 
