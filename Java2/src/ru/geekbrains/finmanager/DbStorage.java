@@ -1,5 +1,10 @@
 package ru.geekbrains.finmanager;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Set;
 
 public class DbStorage implements DataStore {
@@ -8,9 +13,36 @@ public class DbStorage implements DataStore {
     private String url = "jdbc:postgresql://localhost:5432/test_db"; 
     private String driver = "org.postgresql.Driver";
     
+    private Connection getConnection() throws SQLException {
+        return DriverManager.getConnection(url, user, password);
+    }
+
+    public DbStorage() {
+        try {
+            Class.forName(driver); 
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+//TODO rewrite classes add id parametr to constructor args
+//TODO change table to provide unique user name and make drop_all.sql
+    // which delete all tables
     @Override
     public User getUser(String name) {
-        // TODO Auto-generated method stub
+        User result = null;
+        String sqlReqest = "SELECT * FROM users WHERE login = ?;";
+        try (Connection  conn = getConnection()) {
+            conn.setAutoCommit(false);
+            PreparedStatement stm = conn.prepareStatement(sqlReqest);
+            stm.setString(1, name);
+            ResultSet res = stm.executeQuery();
+            if (!res.wasNull()) {
+                result = new User(res.getString(2), res.getString(3));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        i
         return null;
     }
 
