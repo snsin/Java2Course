@@ -5,9 +5,13 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class DbStorage implements DataStore {
+    private Set<String> signedUsers;
     private String user = "test_user";
     private String password = "12345";
     private String url = "jdbc:postgresql://localhost:5432/test_db"; 
@@ -20,6 +24,7 @@ public class DbStorage implements DataStore {
     public DbStorage() {
         try {
             Class.forName(driver); 
+            this.signedUsers = getUserNames();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
@@ -30,28 +35,57 @@ public class DbStorage implements DataStore {
     @Override
     public User getUser(String name) {
         User result = null;
-        String sqlReqest = "SELECT * FROM users WHERE login = ?;";
+        String sqlReqest = "SELECT users.login, users.pass FROM users WHERE users.login = ?;";
         try (Connection  conn = getConnection()) {
             conn.setAutoCommit(false);
             PreparedStatement stm = conn.prepareStatement(sqlReqest);
             stm.setString(1, name);
             ResultSet res = stm.executeQuery();
-            if (!res.wasNull()) {
-                result = new User(res.getString(2), res.getString(3));
+            if (res.next()) {
+                result = new User(res.getString(1), res.getString(2));
             }
+            conn.commit();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        i
-        return null;
+        return result;
     }
 
     @Override
     public Set<String> getUserNames() {
-        // TODO Auto-generated method stub
-        return null;
+        Set<String> result = new HashSet<>();
+        String sqlReqest = "SELECT users.login FROM users;";
+        try (Connection  conn = getConnection()) {
+            conn.setAutoCommit(false);
+            PreparedStatement stm = conn.prepareStatement(sqlReqest);
+            ResultSet res = stm.executeQuery();
+            while (res.next()) {
+                result.add(res.getString(1));
+            }
+            conn.commit();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
     }
 
+    public List<String> getAllUserNames() {
+        List<String> result = new ArrayList<>();
+        String sqlReqest = "SELECT users.login FROM users;";
+        try (Connection  conn = getConnection()) {
+            conn.setAutoCommit(false);
+            PreparedStatement stm = conn.prepareStatement(sqlReqest);
+            ResultSet res = stm.executeQuery();
+            while (res.next()) {
+                result.add(res.getString(1));
+            }
+            conn.commit();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+    
     @Override
     public Set<Account> getAccounts(User owner) {
         // TODO Auto-generated method stub
@@ -66,7 +100,21 @@ public class DbStorage implements DataStore {
 
     @Override
     public void addUser(User user) {
-        // TODO Auto-generated method stub
+        if (!signedUsers.add(user.getName())) {
+            return;
+        }
+        String sqlReqest = "INSERT INTO users(login, pass)"
+                + " VALUES (?, ?);";
+        try (Connection  conn = getConnection()) {
+            conn.setAutoCommit(false);
+            PreparedStatement stm = conn.prepareStatement(sqlReqest);
+            stm.setString(1, user.getName());
+            stm.setString(2, user.getName());
+            stm.executeUpdate();
+            conn.commit();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         
     }
 

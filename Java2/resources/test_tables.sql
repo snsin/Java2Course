@@ -1,6 +1,11 @@
+drop table "public"."categories";
+drop table "public"."records";
+drop table "public"."accounts";
+drop table "public"."users";
+
 CREATE TABLE IF NOT EXISTS "public"."users" (
 	"id" SERIAL PRIMARY KEY,
-	"login" TEXT NOT NULL,
+	"login" TEXT NOT NULL UNIQUE,
 	"pass" TEXT NOT NULL
 );
 
@@ -21,8 +26,8 @@ CREATE TABLE IF NOT EXISTS "public"."records" (
 	
 );
 
-drop table "public"."categories";
-drop table "public"."categoies_names";
+
+
 
 create table if not exists "public"."categories_names" (
 	"id" SERIAL PRIMARY KEY,
