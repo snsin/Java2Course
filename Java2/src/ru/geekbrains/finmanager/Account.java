@@ -38,7 +38,7 @@ public class Account {
 		return description;
 	}
 	
-	public double getBalance() {
+	public BigDecimal getBalance() {
 		return balance;
 	}
 	
