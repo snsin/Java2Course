@@ -53,7 +53,7 @@ public class Account {
 	public Record escape(Record record) {
 		Record result = null;
 		if (records.remove(record)) {
-			balance -= record.sign() * record.getAmount();
+			balance = balance.subtract(BigDecimal.valueOf(record.sign() * record.getAmount()));
 			result = record;
 		}	
 		return result;
@@ -62,6 +62,6 @@ public class Account {
 	@Override
 	public String toString() {
 		return description + "\t: " 
-				+ new BigDecimal(balance).setScale(2, RoundingMode.HALF_UP).floatValue();
+				+ balance.setScale(2, RoundingMode.HALF_UP);
 	}
 }
