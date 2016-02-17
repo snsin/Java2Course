@@ -8,16 +8,23 @@ import java.util.List;
 public class Account {
 	private final int accountId;
 	private String description = "";
-	private BigDecimal balance;
+	private BigDecimal balance = BigDecimal.ZERO;
 	private List<Record> records = new LinkedList<>();
 	
 	public Account(String description) {
-		this.balance = 0.0;
 		if (description != null) {
 			this.description = description;
 		}
-		this.accountId = super.hashCode();
+		this.accountId = 0;
 	}
+	
+	   public Account(int id, BigDecimal balance, String description) {
+	        if (description != null) {
+	            this.description = description;
+	        }
+	        this.accountId = id;
+	        this.balance = balance;
+	    }
 	
 	public boolean conduct(Record transaction) {
 		double amount = transaction.getAmount();
