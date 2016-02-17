@@ -40,8 +40,6 @@ public class Main {
         System.out.println(my.getUserNames());
         my.addUser(new User("Serg", "23322"));
         System.out.println(my.getUserNames());
-        DbStorage myShaddow = (DbStorage) my;
-        System.out.println(myShaddow.getAllUserNames());
         User current = my.getUser("Serg");	
         System.out.println(current.getName() + "\t" + current.hashCode());
 	}

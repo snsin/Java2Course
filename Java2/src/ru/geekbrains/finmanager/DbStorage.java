@@ -24,7 +24,6 @@ public class DbStorage implements DataStore {
     public DbStorage() {
         try {
             Class.forName(driver); 
-            this.signedUsers = getUserNames();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }

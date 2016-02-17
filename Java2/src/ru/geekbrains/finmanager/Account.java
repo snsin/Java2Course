@@ -18,13 +18,13 @@ public class Account {
 		this.accountId = 0;
 	}
 	
-	   public Account(int id, BigDecimal balance, String description) {
-	        if (description != null) {
-	            this.description = description;
-	        }
-	        this.accountId = id;
-	        this.balance = balance;
-	    }
+    Account(int id, BigDecimal balance, String description) {
+        if (description != null) {
+            this.description = description;
+        }
+        this.accountId = id;
+        this.balance = balance;
+    }
 	
 	public boolean conduct(Record transaction) {
 		double amount = transaction.getAmount();
