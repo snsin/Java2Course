@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Set;
 
 public class DbStorage implements DataStore {
-    private Set<String> signedUsers;
+
     private String user = "test_user";
     private String password = "12345";
     private String url = "jdbc:postgresql://localhost:5432/test_db"; 
