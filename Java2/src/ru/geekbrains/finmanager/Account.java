@@ -8,7 +8,7 @@ import java.util.List;
 public class Account {
 	private final int accountId;
 	private String description = "";
-	private double balance;
+	private BigDecimal balance;
 	private List<Record> records = new LinkedList<>();
 	
 	public Account(String description) {
@@ -23,9 +23,8 @@ public class Account {
 		double amount = transaction.getAmount();
 		boolean result = Double.isFinite(amount) & (! records.contains(transaction));
 		if (result) {
-			balance += transaction.sign() * amount;
+			balance = balance.add(BigDecimal.valueOf(transaction.sign() * amount));
 			records.add(transaction);
-			result = true;
 		}	
 		return result;
 	}
