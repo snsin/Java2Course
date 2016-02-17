@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 
 import ru.geekbrains.finmanager.*;
 import ru.geekbrains.hw1.*;
@@ -41,7 +42,9 @@ public class Main {
         my.addUser(new User("Serg", "23322"));
         System.out.println(my.getUserNames());
         User current = my.getUser("Serg");	
-        System.out.println(current.getName() + "\t" + current.hashCode());
+        System.out.println(current.getName() + "\t" + current.getUserId());
+        System.out.println(my.getAccounts(current));
+        //Set<Account> accs = my.getAccounts(current);
 	}
 	public static void tryFinManager() {
 		DataStore my = new Storage();

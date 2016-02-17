@@ -72,8 +72,8 @@ public class DbStorage implements DataStore {
     @Override
     public Set<Account> getAccounts(User owner) {
         Set<Account> result = new HashSet<>();
-        String sqlQuery = "SELECT account.id, accounts.balance, accounts.description"
-                + " FROM acounts WHERE user_id = ?);";
+        String sqlQuery = "SELECT accounts.id, accounts.balance, accounts.description"
+                + " FROM accounts WHERE user_id = ?;";
         try (Connection  conn = getConnection()) {
             conn.setAutoCommit(false);
             PreparedStatement stm = conn.prepareStatement(sqlQuery);
