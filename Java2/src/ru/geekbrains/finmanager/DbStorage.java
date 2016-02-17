@@ -35,14 +35,15 @@ public class DbStorage implements DataStore {
     @Override
     public User getUser(String name) {
         User result = null;
-        String sqlReqest = "SELECT users.login, users.pass FROM users WHERE users.login = ?;";
+        String sqlQuery = "SELECT users.id, users.login, users.pass "
+                + "FROM users WHERE users.login = ?;";
         try (Connection  conn = getConnection()) {
             conn.setAutoCommit(false);
-            PreparedStatement stm = conn.prepareStatement(sqlReqest);
+            PreparedStatement stm = conn.prepareStatement(sqlQuery);
             stm.setString(1, name);
             ResultSet res = stm.executeQuery();
             if (res.next()) {
-                result = new User(res.getString(1), res.getString(2));
+                result = new User(res.getInt(1), res.getString(2), res.getString(3));
             }
             conn.commit();
         } catch (SQLException e) {
@@ -54,27 +55,10 @@ public class DbStorage implements DataStore {
     @Override
     public Set<String> getUserNames() {
         Set<String> result = new HashSet<>();
-        String sqlReqest = "SELECT users.login FROM users;";
+        String sqlQuery = "SELECT users.login FROM users;";
         try (Connection  conn = getConnection()) {
             conn.setAutoCommit(false);
-            PreparedStatement stm = conn.prepareStatement(sqlReqest);
-            ResultSet res = stm.executeQuery();
-            while (res.next()) {
-                result.add(res.getString(1));
-            }
-            conn.commit();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return result;
-    }
-
-    public List<String> getAllUserNames() {
-        List<String> result = new ArrayList<>();
-        String sqlReqest = "SELECT users.login FROM users;";
-        try (Connection  conn = getConnection()) {
-            conn.setAutoCommit(false);
-            PreparedStatement stm = conn.prepareStatement(sqlReqest);
+            PreparedStatement stm = conn.prepareStatement(sqlQuery);
             ResultSet res = stm.executeQuery();
             while (res.next()) {
                 result.add(res.getString(1));
@@ -88,8 +72,22 @@ public class DbStorage implements DataStore {
     
     @Override
     public Set<Account> getAccounts(User owner) {
-        // TODO Auto-generated method stub
-        return null;
+        Set<Account> result = new HashSet<>();
+        String sqlQuery = "SELECT account.id, accounts.balance, accounts.description"
+                + " FROM acounts WHERE user_id = ?);";
+        try (Connection  conn = getConnection()) {
+            conn.setAutoCommit(false);
+            PreparedStatement stm = conn.prepareStatement(sqlQuery);
+            stm.setInt(1, owner.getUserId());
+            ResultSet res = stm.executeQuery();
+            while (res.next()) {
+                result.add(new Account(res.getInt(1), res.getBigDecimal(2), res.getString(3)));
+            }
+            conn.commit();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
     }
 
     @Override
@@ -100,14 +98,17 @@ public class DbStorage implements DataStore {
 
     @Override
     public void addUser(User user) {
-        if (!signedUsers.add(user.getName())) {
+/*        if (!signedUsers.add(user.getName())) {
+            return;
+        }*/
+        if (getUser(user.getName()) != null) {
             return;
         }
-        String sqlReqest = "INSERT INTO users(login, pass)"
+        String sqlQuery = "INSERT INTO users(login, pass)"
                 + " VALUES (?, ?);";
         try (Connection  conn = getConnection()) {
             conn.setAutoCommit(false);
-            PreparedStatement stm = conn.prepareStatement(sqlReqest);
+            PreparedStatement stm = conn.prepareStatement(sqlQuery);
             stm.setString(1, user.getName());
             stm.setString(2, user.getName());
             stm.executeUpdate();
@@ -120,7 +121,22 @@ public class DbStorage implements DataStore {
 
     @Override
     public void addAccount(User user, Account account) {
-        // TODO Auto-generated method stub
+        if (getAccounts(user).contains(account)) {
+            return;
+        }
+        String sqlQuery = "INSERT INTO accounts(user_id, balance, description)"
+                + " VALUES (?, ?, ?);";
+        try (Connection  conn = getConnection()) {
+            conn.setAutoCommit(false);
+            PreparedStatement stm = conn.prepareStatement(sqlQuery);
+            stm.setInt(1, user.getUserId());
+            stm.setBigDecimal(2, account.getBalance());
+            stm.setString(3, account.getDescription());
+            stm.executeUpdate();
+            conn.commit();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         
     }
 
