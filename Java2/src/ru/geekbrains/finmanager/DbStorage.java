@@ -183,18 +183,24 @@ public class DbStorage implements DataStore {
         String sqlQuery = "INSERT INTO records(account_id, transfer, date, "
                 + "amount, description)"
                 + " VALUES (?, ?, ?, ?, ?);";
+        if (!account.conduct(record)) {
+            return;
+        }
         try (Connection  conn = getConnection()) {
             conn.setAutoCommit(false);
+
             PreparedStatement stm = conn.prepareStatement(sqlQuery);
-            stm.setInt(1, user.getUserId());
-            stm.setBigDecimal(2, account.getBalance());
-            stm.setString(3, account.getDescription());
+            stm.setInt(1, account.getId());
+            stm.setInt(2, record.sign());
+            stm.setDate(3, record.getDate());
+            stm.setBigDecimal(4, record.getAmount());
+            stm.setString(5, record.getDescription());
             stm.executeUpdate();
             conn.commit();
         } catch (SQLException e) {
+            account.escape(record);
             e.printStackTrace();
         }
-        
     }
 
     @Override

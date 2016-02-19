@@ -9,14 +9,15 @@ import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 
-public class User implements JdbcCrud {
-    private static final String[] COLUMN_NAMES = {
-            "users.id",
+public class User {
+    private static final String[] NAMES = {
+            "users",        // Table name
+            "users.id",     // Column names
             "users.login",
             "users.pass"
     };
-    private final int userId;
-    private final String name;
+    private int userId;
+    private String name;
     private String passHash;
     private boolean loggedIn = false;
     private List<Account> accounts = new LinkedList<>();
@@ -27,7 +28,7 @@ public class User implements JdbcCrud {
         this.passHash = passHash;
     }
     
-    User(int id, String name, String passHash) {
+    public User(int id, String name, String passHash) {
         this.userId = id;
         this.name = name;
         this.passHash = passHash;
@@ -82,46 +83,5 @@ public class User implements JdbcCrud {
         return userId;
     }
 
-    @Override
-    public boolean create(Connection conn, int id) {
-        // TODO Auto-generated method stub
-        return false;
-    }
-
-    @Override
-    public boolean read(Connection conn, int id) {
-        b result = null;
-        String sqlQuery = "SELECT + " + COLUMN_NAMES[1] + ", "
-                + COLUMN_NAMES[2] + ", "
-                + COLUMN_NAMES[3] + "FROM " + COLUMN_NAMES[0]
-                + " WHERE " + COLUMN_NAMES[2] + " = ?;";
-        try {
-            conn.setAutoCommit(false);
-            PreparedStatement stm = conn.prepareStatement(sqlQuery);
-            stm.setString(1, name);
-            ResultSet res = stm.executeQuery();
-            if (res.next()) {
-                result = new User(res.getInt(1), res.getString(2), res.getString(3));
-            }
-            conn.commit();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            
-        }
-        return false;
-    }
-
-    @Override
-    public boolean update(Connection conn, int id) {
-        // TODO Auto-generated method stub
-        return false;
-    }
-
-    @Override
-    public boolean delete(Connection conn, int id) {
-        // TODO Auto-generated method stub
-        return false;
-    }
-    
     
 }
