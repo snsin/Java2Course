@@ -177,7 +177,23 @@ public class DbStorage implements DataStore {
 
     @Override
     public void addRecord(Account account, Record record) {
-        // TODO Auto-generated method stub
+        if (getRecords(account).contains(record)) {
+            return;
+        }
+        String sqlQuery = "INSERT INTO records(account_id, transfer, date, "
+                + "amount, description)"
+                + " VALUES (?, ?, ?, ?, ?);";
+        try (Connection  conn = getConnection()) {
+            conn.setAutoCommit(false);
+            PreparedStatement stm = conn.prepareStatement(sqlQuery);
+            stm.setInt(1, user.getUserId());
+            stm.setBigDecimal(2, account.getBalance());
+            stm.setString(3, account.getDescription());
+            stm.executeUpdate();
+            conn.commit();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         
     }
 

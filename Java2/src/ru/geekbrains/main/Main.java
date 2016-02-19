@@ -1,5 +1,6 @@
 package ru.geekbrains.main;
 
+import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -43,7 +44,13 @@ public class Main {
         System.out.println(my.getUserNames());
         User current = my.getUser("Serg");	
         System.out.println(current.getName() + "\t" + current.getUserId());
+//        my.addAccount(current, new Account("salary"));
+        Account salaryAcc = my.getAccounts(current).iterator().next();
         System.out.println(my.getAccounts(current));
+        my.addRecord(salaryAcc, new Record(Transfer.DEBIT, BigDecimal.valueOf(1000.0), "salary for month", 
+                    new Category()));
+        System.out.println(my.getAccounts(current));
+        
         //Set<Account> accs = my.getAccounts(current);
 	}
 	public static void tryFinManager() {
@@ -61,15 +68,16 @@ public class Main {
 		System.out.println(current.getAccounts().get(0));
 		current.addAccount(current.getAccounts().get(0));
 		for (Account acc : current.getAccounts()) {
-			acc.conduct(new Record(Transfer.DEBIT, 1000.0, "salary", new Category()));
-			acc.conduct(new Record(Transfer.CREDIT, rnd.nextInt(10000) * rnd.nextDouble(), 
+			acc.conduct(new Record(Transfer.DEBIT, BigDecimal.valueOf(1000.0), "salary", 
+			        new Category()));
+			acc.conduct(new Record(Transfer.CREDIT, BigDecimal.valueOf(rnd.nextInt(10000) * rnd.nextDouble()), 
 			        "present", new Category()));
 		}
 		System.out.println("Accounts after\t" + my.getAccounts(current));
 		current.getAccounts().get(2).escape(current.getAccounts().get(2).getRecords().get(1));
 		System.out.println("Accounts very after\t" + my.getAccounts(current));
 		for (int i = 0; i < 20; i++) {
-			current.getAccounts().get(0).conduct(new Record(Transfer.DEBIT, 1000.0,
+			current.getAccounts().get(0).conduct(new Record(Transfer.DEBIT, BigDecimal.valueOf(1000.0),
 			        "salary", new Category()));
 			try {
 				Thread.sleep(1000);
