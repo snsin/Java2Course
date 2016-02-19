@@ -2,10 +2,10 @@ package ru.geekbrains.finmanager;
 
 import java.sql.Connection;
 
-public interface JdbcCrud {
-    boolean create(Connection conn, int id);
-    boolean read(Connection conn, int id);
-    boolean update(Connection conn, int id);
-    boolean delete(Connection conn, int id);
+public interface JdbcCrud<T> {
+    T create(Connection conn, int id);
+    T read(Connection conn, int id);
+    T update(Connection conn, int id);
+    T delete(Connection conn, int id);
 
 }
