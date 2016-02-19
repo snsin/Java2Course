@@ -1,6 +1,7 @@
 package ru.geekbrains.finmanager;
 
-import java.util.Date;
+import java.math.BigDecimal;
+import java.sql.Date;
 
 
 
@@ -8,11 +9,11 @@ public final class Record {
 	private final int recordId;
 	private final Transfer transfer;
 	private final Date date;
-	private final double amount;
+	private final BigDecimal amount;
 	private final String description;
 	private final Category category;
 	
-	public Record(Transfer transfer, double amount, String description, Category category) {
+	public Record(Transfer transfer, BigDecimal amount, String description, Category category) {
 		this.transfer = transfer;
 		this.amount = amount;
 		this.description = description;
@@ -20,12 +21,23 @@ public final class Record {
 		this.recordId = super.hashCode();
 		this.category = category;
 	}
+
+    Record(int id, Transfer transfer, Date date, BigDecimal amount, 
+            String description, Category category) {
+        this.transfer = transfer;
+        this.amount = amount;
+        this.description = description;
+        this.date = date;   
+        this.recordId = super.hashCode();
+        this.category = category;
+    }
+	
 	
 	public int sign() {
 		return transfer.sign();
 	}
 	
-	public double getAmount() {
+	public BigDecimal getAmount() {
 		return amount;
 	}
 	
@@ -45,4 +57,8 @@ public final class Record {
 	public int hashCode() {
 		return recordId;
 	}
+
+    public Category getCategory() {
+        return category;
+    }
 }

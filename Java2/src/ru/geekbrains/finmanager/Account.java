@@ -27,16 +27,17 @@ public class Account {
     }
 	
 	public boolean conduct(Record transaction) {
-		double amount = transaction.getAmount();
-		boolean result = Double.isFinite(amount) & (! records.contains(transaction));
+		boolean result = (! records.contains(transaction));
 		if (result) {
-			balance = balance.add(BigDecimal.valueOf(transaction.sign() * amount));
+		    BigDecimal amount = transaction.getAmount()
+		                .multiply(BigDecimal.valueOf(transaction.sign()));
+			balance = balance.add(amount);
 			records.add(transaction);
 		}	
 		return result;
 	}
 	
-	public long getId() {
+	public int getId() {
 		return accountId;
 	}
 	
@@ -60,7 +61,9 @@ public class Account {
 	public Record escape(Record record) {
 		Record result = null;
 		if (records.remove(record)) {
-			balance = balance.subtract(BigDecimal.valueOf(record.sign() * record.getAmount()));
+		    BigDecimal amount = record.getAmount()
+		                .multiply(BigDecimal.valueOf(record.sign()));
+			balance = balance.subtract(amount);
 			result = record;
 		}	
 		return result;

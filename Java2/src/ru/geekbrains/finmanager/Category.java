@@ -24,7 +24,7 @@ public class Category {
         }
         this.description = description;
     }
-    
+
     public String getName() {
         char ch = Character.toUpperCase(name.charAt(0));      
         return name.replaceFirst("^.", Character.toString(ch));

@@ -91,8 +91,44 @@ public class DbStorage implements DataStore {
 
     @Override
     public Set<Record> getRecords(Account account) {
-        // TODO Auto-generated method stub
-        return null;
+        Set<Record> result = new HashSet<>();
+        String sqlQuery = "SELECT records.id, records.transfer, records.date,"
+                + " records.amount, records.description"
+                + " FROM records WHERE account_id = ?;";
+        try (Connection  conn = getConnection()) {
+            conn.setAutoCommit(false);
+            PreparedStatement stm = conn.prepareStatement(sqlQuery);
+            stm.setInt(1, account.getId());
+            ResultSet res = stm.executeQuery();
+            while (res.next()) {
+                result.add(new Record(res.getInt(1), Transfer.getTransfer(res.getInt(2)),
+                        res.getDate(3), res.getBigDecimal(4), res.getString(5),
+                        getCategory(res.getInt(1))));
+            }
+            conn.commit();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    private Category getCategory(int recordId) {
+        Category result = new Category();
+        String sqlQuery = "SELECT categories.name, categories.description "
+                + "FROM categories WHERE categories.record_id = ?;";
+        try (Connection  conn = getConnection()) {
+            conn.setAutoCommit(false);
+            PreparedStatement stm = conn.prepareStatement(sqlQuery);
+            stm.setInt(1, recordId);
+            ResultSet res = stm.executeQuery();
+            if (res.next()) {
+                result = new Category(res.getString(1), res.getString(2));
+            }
+            conn.commit();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
     }
 
     @Override

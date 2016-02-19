@@ -62,7 +62,7 @@ public class Main {
 		current.addAccount(current.getAccounts().get(0));
 		for (Account acc : current.getAccounts()) {
 			acc.conduct(new Record(Transfer.DEBIT, 1000.0, "salary", new Category()));
-			acc.conduct(new Record(Transfer.CDREDIT, rnd.nextInt(10000) * rnd.nextDouble(), 
+			acc.conduct(new Record(Transfer.CREDIT, rnd.nextInt(10000) * rnd.nextDouble(), 
 			        "present", new Category()));
 		}
 		System.out.println("Accounts after\t" + my.getAccounts(current));

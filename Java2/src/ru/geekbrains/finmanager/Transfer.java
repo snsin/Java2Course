@@ -1,6 +1,6 @@
 package ru.geekbrains.finmanager;
 
-public enum Transfer {DEBIT(1), CDREDIT(-1);
+public enum Transfer {DEBIT(1), CREDIT(-1);
 	private int sign;
 	
 	Transfer(int sign) {
@@ -9,5 +9,14 @@ public enum Transfer {DEBIT(1), CDREDIT(-1);
 	
 	public int sign() {
 		return sign;
+	}
+	
+	public static Transfer getTransfer(int value){
+	    if (value >= 0) {
+	        return DEBIT;
+	    } else {
+	        return CREDIT;
+	    }
+	    
 	}
 }
