@@ -3,14 +3,17 @@ package ru.geekbrains.finmanager;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 
 public class User implements JdbcCrud {
     private static final String[] COLUMN_NAMES = {
-            "id",
-            "login",
-            "pass"
+            "users.id",
+            "users.login",
+            "users.pass"
     };
     private final int userId;
     private final String name;
@@ -87,7 +90,24 @@ public class User implements JdbcCrud {
 
     @Override
     public boolean read(Connection conn, int id) {
-        // TODO Auto-generated method stub
+        b result = null;
+        String sqlQuery = "SELECT + " + COLUMN_NAMES[1] + ", "
+                + COLUMN_NAMES[2] + ", "
+                + COLUMN_NAMES[3] + "FROM " + COLUMN_NAMES[0]
+                + " WHERE " + COLUMN_NAMES[2] + " = ?;";
+        try {
+            conn.setAutoCommit(false);
+            PreparedStatement stm = conn.prepareStatement(sqlQuery);
+            stm.setString(1, name);
+            ResultSet res = stm.executeQuery();
+            if (res.next()) {
+                result = new User(res.getInt(1), res.getString(2), res.getString(3));
+            }
+            conn.commit();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            
+        }
         return false;
     }
 
