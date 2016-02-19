@@ -2,10 +2,16 @@ package ru.geekbrains.finmanager;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.sql.Connection;
 import java.util.LinkedList;
 import java.util.List;
 
-public class User {
+public class User implements JdbcCrud {
+    private static final String[] COLUMN_NAMES = {
+            "id",
+            "login",
+            "pass"
+    };
     private final int userId;
     private final String name;
     private String passHash;
@@ -72,4 +78,30 @@ public class User {
     public int getUserId() {
         return userId;
     }
+
+    @Override
+    public boolean create(Connection conn, int id) {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    @Override
+    public boolean read(Connection conn, int id) {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    @Override
+    public boolean update(Connection conn, int id) {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    @Override
+    public boolean delete(Connection conn, int id) {
+        // TODO Auto-generated method stub
+        return false;
+    }
+    
+    
 }
