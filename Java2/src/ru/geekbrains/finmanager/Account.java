@@ -7,8 +7,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Set;
 
 public class Account implements JdbcCrud<Account> {
@@ -38,6 +36,13 @@ public class Account implements JdbcCrud<Account> {
 		return true;
 	}
 
+	public Record escape(Record record) {
+		BigDecimal amount =
+				record.getAmount().multiply(BigDecimal.valueOf(record.sign()));
+		balance = balance.subtract(amount);
+		return record;
+	}
+
 	public int getId() {
 		return accountId;
 	}
@@ -57,13 +62,6 @@ public class Account implements JdbcCrud<Account> {
 	@Override
 	public int hashCode() {
 		return accountId;
-	}
-
-	public Record escape(Record record) {
-		BigDecimal amount =
-				record.getAmount().multiply(BigDecimal.valueOf(record.sign()));
-		balance = balance.subtract(amount);
-		return record;
 	}
 
 	@Override

@@ -7,6 +7,8 @@ import java.util.Set;
 
 public class Storage implements DataStore {
 	private Map<String, User> users = new HashMap<>();
+	private Map<String, Set<Account>> accounts = new HashMap<>();
+	private Map<String, Set<Record>> records = new HashMap<>();
 
 	@Override
 	public User getUser(String name) {
@@ -21,14 +23,14 @@ public class Storage implements DataStore {
 	@Override
 	public Set<Account> getAccounts(User owner) {
 		Set<Account> result = new HashSet<>();
-		result.addAll(owner.getAccounts());
+		result.addAll(accounts.get(owner.getName()));
 		return result;
 	}
 
 	@Override
 	public Set<Record> getRecords(Account account) {
 		Set<Record> result = new HashSet<>();
-		result.addAll(account.getRecords());
+		result.addAll(records.get(account.getId()));
 		return result;
 
 	}
@@ -42,12 +44,20 @@ public class Storage implements DataStore {
 
 	@Override
 	public void addAccount(User user, Account account) {
-		user.addAccount(account);
+		Set<Account> accs = accounts.get(user.getName());
+		if (!accs.contains(account)){
+			accs.add(account);
+		}
+		
 	}
 
 	@Override
 	public void addRecord(Account account, Record record) {
-		account.conduct(record);
+		Set<Record> recs = records.get(account.getId());
+		if (!recs.contains(record)){
+			recs.add(record);
+			account.conduct(record);
+		}
 	}
 
 	@Override
@@ -57,12 +67,23 @@ public class Storage implements DataStore {
 
 	@Override
 	public Account removeAccount(User owner, Account account) {
-		return owner.removeAccount(account);
+		Account result = null;
+		Set<Account> accs = accounts.get(owner.getName());
+		if (accs.remove(account)) {
+			result = account;
+		}
+		return result;
 	}
 
 	@Override
 	public Record removeRecord(Account from, Record record) {
-		return from.escape(record);
+		Record result =  null;
+		Set<Record> recs = records.get(from.getId());
+		if (recs.remove(record)) {
+			result = record;
+			from.escape(record);
+		}
+		return result;		
 	}
 
 }
