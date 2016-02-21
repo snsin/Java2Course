@@ -40,7 +40,11 @@ public class DbHelper {
 
 	private static void createTables() {
 		
-		PreparedStatement stm = conn.prepareStatement(sql);		
+		PreparedStatement stm = conn.prepareStatement("CREATE TABLE IF NOT EXISTS "public"."users" (
+	id SERIAL PRIMARY KEY,
+	"login" TEXT NOT NULL UNIQUE,
+	"pass" TEXT NOT NULL
+);");		
 	}
 
 }
