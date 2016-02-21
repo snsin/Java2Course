@@ -6,9 +6,13 @@ import java.util.Map;
 import java.util.Set;
 
 public class Storage implements DataStore {
+	static int userId = 1;
+	static int accountId = 1;
+	static int recordId = 1;
+	
 	private Map<String, User> users = new HashMap<>();
-	private Map<String, Set<Account>> accounts = new HashMap<>();
-	private Map<String, Set<Record>> records = new HashMap<>();
+	private Map<User, Set<Account>> accounts = new HashMap<>();
+	private Map<Account, Set<Record>> records = new HashMap<>();
 
 	@Override
 	public User getUser(String name) {
@@ -22,15 +26,19 @@ public class Storage implements DataStore {
 
 	@Override
 	public Set<Account> getAccounts(User owner) {
-		Set<Account> result = new HashSet<>();
-		result.addAll(accounts.get(owner.getName()));
+		Set<Account> result = accounts.get(owner);
+		if (result == null) {
+			result = new HashSet<>();
+		}
 		return result;
 	}
 
 	@Override
 	public Set<Record> getRecords(Account account) {
-		Set<Record> result = new HashSet<>();
-		result.addAll(records.get(account.getId()));
+		Set<Record> result = records.get(account);
+		if (result == null){
+			result = new HashSet<>();
+		}
 		return result;
 
 	}
@@ -38,24 +46,32 @@ public class Storage implements DataStore {
 	@Override
 	public void addUser(User user) {
 		if (!users.containsKey(user.getName())) {
+			user.setId(userId);
+			userId++;
 			users.put(user.getName(), user);
+			accounts.put(user, new HashSet<>());
 		}
 	}
 
 	@Override
 	public void addAccount(User user, Account account) {
-		Set<Account> accs = accounts.get(user.getName());
+		Set<Account> accs = accounts.get(user);
 		if (!accs.contains(account)){
+			account.setId(accountId);
+			accountId++;
 			accs.add(account);
+			records.put(account, new HashSet<>());
 		}
 		
 	}
 
 	@Override
 	public void addRecord(Account account, Record record) {
-		Set<Record> recs = records.get(account.getId());
+		Set<Record> recs = records.get(account);
 		if (!recs.contains(record)){
 			recs.add(record);
+			record.setId(recordId);
+			recordId++;
 			account.conduct(record);
 		}
 	}
@@ -68,7 +84,7 @@ public class Storage implements DataStore {
 	@Override
 	public Account removeAccount(User owner, Account account) {
 		Account result = null;
-		Set<Account> accs = accounts.get(owner.getName());
+		Set<Account> accs = accounts.get(owner);
 		if (accs.remove(account)) {
 			result = account;
 		}
@@ -78,7 +94,7 @@ public class Storage implements DataStore {
 	@Override
 	public Record removeRecord(Account from, Record record) {
 		Record result =  null;
-		Set<Record> recs = records.get(from.getId());
+		Set<Record> recs = records.get(from);
 		if (recs.remove(record)) {
 			result = record;
 			from.escape(record);

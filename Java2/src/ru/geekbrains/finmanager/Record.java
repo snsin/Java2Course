@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.sql.Date;
 
 public final class Record {
-	private final int recordId;
+	private int recordId;
 	private final Transfer transfer;
 	private final Date date;
 	private final BigDecimal amount;
@@ -50,11 +50,16 @@ public final class Record {
 	public String getDescription() {
 		return description;
 	}
+	
+	void setId(int id) {
+		this.recordId = id;
+	}
 
 	@Override
 	public int hashCode() {
 		return recordId;
 	}
+	
 
 	public Category getCategory() {
 		return category;

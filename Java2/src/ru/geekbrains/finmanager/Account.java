@@ -10,7 +10,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class Account implements JdbcCrud<Account> {
-	private final int accountId;
+	private int accountId = 0;
 	private String description = "";
 	private BigDecimal balance = BigDecimal.ZERO;
 
@@ -18,7 +18,6 @@ public class Account implements JdbcCrud<Account> {
 		if (description != null) {
 			this.description = description;
 		}
-		this.accountId = 0;
 	}
 
 	Account(int id, BigDecimal balance, String description) {
@@ -45,6 +44,10 @@ public class Account implements JdbcCrud<Account> {
 
 	public int getId() {
 		return accountId;
+	}
+	
+	void setId(int id) {
+		this.accountId = id;		
 	}
 
 	public String getDescription() {

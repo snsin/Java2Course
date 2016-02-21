@@ -28,10 +28,7 @@ public class Main {
 	}
 
 	public static void main(String[] args) {
-		Object o = new int[3];
-		Class<?> a = new int[5].getClass();
-		a = o.getClass();
-		a.
+
 		// tryStack();
 		// tryLengthComp();
 		// tryFinManager();
@@ -102,7 +99,7 @@ public class Main {
 		my.addAccount(current, new Account("MyAccount"));
 		my.addAccount(current, new Account("GreyMoney"));
 		my.addAccount(current, new Account("legal"));
-		System.out.println(my.getAccounts(current).iterator().next());
+		System.out.println(my.getAccounts(current));
 		my.addAccount(current, my.getAccounts(current).iterator().next());
 		for (Account acc : my.getAccounts(current)) {
 			acc.conduct(new Record(Transfer.DEBIT, BigDecimal.valueOf(1000.0), "salary",

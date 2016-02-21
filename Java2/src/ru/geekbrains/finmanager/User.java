@@ -10,7 +10,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class User {
-	private int userId;
+	private int userId = 0;
 	private String name;
 	private String passHash;
 	private boolean loggedIn = false;
@@ -22,7 +22,7 @@ public class User {
 		this.passHash = passHash;
 	}
 
-	public User(int id, String name, String passHash) {
+	User(int id, String name, String passHash) {
 		this.userId = id;
 		this.name = name;
 		this.passHash = passHash;
@@ -57,4 +57,17 @@ public class User {
 		return userId;
 	}
 
+	public String getPassHash() {
+		return passHash;
+	}
+
+	void setId(int id) {
+		this.userId = id;
+		
+	}
+	
+	@Override
+	public int hashCode() {
+		return userId;
+	}
 }
