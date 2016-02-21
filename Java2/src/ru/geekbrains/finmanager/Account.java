@@ -33,14 +33,11 @@ public class Account implements JdbcCrud<Account> {
 	}
 
 	public boolean conduct(Record transaction) {
-		boolean result = (!records.contains(transaction));
-		if (result) {
-			BigDecimal amount = transaction.getAmount()
-					.multiply(BigDecimal.valueOf(transaction.sign()));
-			balance = balance.add(amount);
-			records.add(transaction);
-		}
-		return result;
+		BigDecimal amount = 
+				transaction.getAmount().multiply(BigDecimal.valueOf(transaction.sign()));
+		balance = balance.add(amount);
+		records.add(transaction);
+		return true;
 	}
 
 	public int getId() {
@@ -55,9 +52,9 @@ public class Account implements JdbcCrud<Account> {
 		return balance;
 	}
 
-	public List<Record> getRecords() {
+/*	public List<Record> getRecords() {
 		return records;
-	}
+	}*/
 
 	@Override
 	public int hashCode() {
@@ -65,14 +62,10 @@ public class Account implements JdbcCrud<Account> {
 	}
 
 	public Record escape(Record record) {
-		Record result = null;
-		if (records.remove(record)) {
-			BigDecimal amount =
-					record.getAmount().multiply(BigDecimal.valueOf(record.sign()));
-			balance = balance.subtract(amount);
-			result = record;
-		}
-		return result;
+		BigDecimal amount =
+				record.getAmount().multiply(BigDecimal.valueOf(record.sign()));
+		balance = balance.subtract(amount);
+		return record;
 	}
 
 	@Override
