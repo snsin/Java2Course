@@ -47,8 +47,8 @@ public class Main {
 		 */
 
 		//tryDbStorage();
-		//tryFinManager();
-		tryDateComparator();
+		tryFinManager();
+		//tryDateComparator();
 		
 
 	}

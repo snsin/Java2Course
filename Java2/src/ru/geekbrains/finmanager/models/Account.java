@@ -111,7 +111,7 @@ public class Account implements JdbcCrud<Account> {
 
 	@Override
 	public boolean update(Connection conn) {
-		boolean result = false;
+		boolean result = true;
 		String sqlQuery = "UPDATE ONLY accounts" + " SET balance = ?, description = ?"
 				+ " WHERE id = ?;";
 		try {
@@ -131,7 +131,7 @@ public class Account implements JdbcCrud<Account> {
 
 	@Override
 	public boolean delete(Connection conn) {
-		boolean result = false;
+		boolean result = true;
 		String sqlQuery = "DELETE ONLY accounts WHERE account.id = ?;";
 		try {
 			conn.setAutoCommit(false);
