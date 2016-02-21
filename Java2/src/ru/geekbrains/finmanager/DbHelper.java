@@ -41,7 +41,7 @@ public class DbHelper {
 	private static void createTables() throws SQLException {
 		
 		PreparedStatement stm = conn.prepareStatement("CREATE TABLE IF NOT EXISTS public.users ("
-				+ "id SERIAL PRIMARY KEY,"
+				+ " id SERIAL PRIMARY KEY,"
 				+ "	login TEXT NOT NULL UNIQUE,"
 				+ "	pass TEXT NOT NULL);");	
 		stm.executeUpdate();
@@ -61,7 +61,7 @@ public class DbHelper {
 				+ "	description text);");
 		stm.executeUpdate();
 		
-		stm = conn.prepareStatement("create table if not exists public.categories_names"
+		stm = conn.prepareStatement("create table if not exists public.categories_names ("
 				+ "	id SERIAL PRIMARY KEY,"
 				+ "	name text NOT NULL UNIQUE);");
 		stm.executeUpdate();
@@ -72,6 +72,18 @@ public class DbHelper {
 				+ "	name text references public.categories_names (name),"
 				+ "	description text);");
 		stm.executeUpdate();
+		
+	}
+
+	public static void closeConnection() {
+		if (conn != null) {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+				System.exit(SysErrs.DB_CONNECTION_ERROR.ordinal());
+			}
+		}
 		
 	}
 

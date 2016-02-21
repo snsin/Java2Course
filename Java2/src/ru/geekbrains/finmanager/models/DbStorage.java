@@ -10,9 +10,11 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import ru.geekbrains.finmanager.DbHelper;
+
 public class DbStorage implements DataStore {
 
-	private String user = "test_user";
+/*	private String user = "test_user";
 	private String password = "12345";
 	private String url = "jdbc:postgresql://localhost:5432/test_db";
 	private String driver = "org.postgresql.Driver";
@@ -20,14 +22,17 @@ public class DbStorage implements DataStore {
 	private Connection getConnection() throws SQLException {
 		return DriverManager.getConnection(url, user, password);
 	}
-
+	*/
+	Connection conn = null;
 	public DbStorage() {
 		try {
-			Class.forName(driver);
-		} catch (ClassNotFoundException e) {
+			this.conn = DbHelper.getConnection();
+		} catch (SQLException e) {
 			e.printStackTrace();
+			DbHelper.closeConnection();
 		}
 	}
+
 
 	// TODO rewrite classes add id parametr to constructor args
 	// TODO change table to provide unique user name and make drop_all.sql
@@ -37,7 +42,7 @@ public class DbStorage implements DataStore {
 		User result = null;
 		String sqlQuery = "SELECT users.id, users.login, users.pass "
 				+ "FROM users WHERE users.login = ?;";
-		try (Connection conn = getConnection()) {
+		try /*(Connection conn = DbHelper.getConnection())*/ {
 			conn.setAutoCommit(false);
 			PreparedStatement stm = conn.prepareStatement(sqlQuery);
 			stm.setString(1, name);
@@ -56,7 +61,7 @@ public class DbStorage implements DataStore {
 	public Set<String> getUserNames() {
 		Set<String> result = new HashSet<>();
 		String sqlQuery = "SELECT users.login FROM users;";
-		try (Connection conn = getConnection()) {
+		try /*(Connection conn = DbHelper.getConnection())*/ {
 			conn.setAutoCommit(false);
 			PreparedStatement stm = conn.prepareStatement(sqlQuery);
 			ResultSet res = stm.executeQuery();
@@ -75,7 +80,7 @@ public class DbStorage implements DataStore {
 		Set<Account> result = new HashSet<>();
 		String sqlQuery = "SELECT accounts.id, accounts.balance, accounts.description"
 				+ " FROM accounts WHERE user_id = ?;";
-		try (Connection conn = getConnection()) {
+		try /*(Connection conn = DbHelper.getConnection())*/ {
 			conn.setAutoCommit(false);
 			PreparedStatement stm = conn.prepareStatement(sqlQuery);
 			stm.setInt(1, owner.getUserId());
@@ -97,7 +102,7 @@ public class DbStorage implements DataStore {
 		String sqlQuery = "SELECT records.id, records.transfer, records.date,"
 				+ " records.amount, records.description"
 				+ " FROM records WHERE account_id = ?;";
-		try (Connection conn = getConnection()) {
+		try /*(Connection conn = DbHelper.getConnection())*/ {
 			conn.setAutoCommit(false);
 			PreparedStatement stm = conn.prepareStatement(sqlQuery);
 			stm.setInt(1, account.getId());
@@ -118,7 +123,7 @@ public class DbStorage implements DataStore {
 		Category result = new Category();
 		String sqlQuery = "SELECT categories.name, categories.description "
 				+ "FROM categories WHERE categories.record_id = ?;";
-		try (Connection conn = getConnection()) {
+		try /*(Connection conn = DbHelper.getConnection())*/ {
 			conn.setAutoCommit(false);
 			PreparedStatement stm = conn.prepareStatement(sqlQuery);
 			stm.setInt(1, recordId);
@@ -142,7 +147,7 @@ public class DbStorage implements DataStore {
 			return;
 		}
 		String sqlQuery = "INSERT INTO users(login, pass)" + " VALUES (?, ?);";
-		try (Connection conn = getConnection()) {
+		try /*(Connection conn = DbHelper.getConnection())*/ {
 			conn.setAutoCommit(false);
 			PreparedStatement stm = conn.prepareStatement(sqlQuery);
 			stm.setString(1, user.getName());
@@ -162,7 +167,7 @@ public class DbStorage implements DataStore {
 		}
 		String sqlQuery = "INSERT INTO accounts(user_id, balance, description)"
 				+ " VALUES (?, ?, ?);";
-		try (Connection conn = getConnection()) {
+		try /*(Connection conn = DbHelper.getConnection())*/ {
 			conn.setAutoCommit(false);
 			PreparedStatement stm = conn.prepareStatement(sqlQuery);
 			stm.setInt(1, user.getUserId());
@@ -184,7 +189,7 @@ public class DbStorage implements DataStore {
 		String sqlQuery = "INSERT INTO records(account_id, transfer, date, "
 				+ "amount, description)" + " VALUES (?, ?, ?, ?, ?);";
 		account.conduct(record);
-		try (Connection conn = getConnection()) {
+		try /*(Connection conn = DbHelper.getConnection())*/ {
 			conn.setAutoCommit(false);
 
 			PreparedStatement stm = conn.prepareStatement(sqlQuery);
