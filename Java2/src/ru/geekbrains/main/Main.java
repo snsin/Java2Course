@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Iterator;
@@ -27,6 +28,10 @@ public class Main {
 	}
 
 	public static void main(String[] args) {
+		Object o = new int[3];
+		Class<?> a = new int[5].getClass();
+		a = o.getClass();
+		a.
 		// tryStack();
 		// tryLengthComp();
 		// tryFinManager();
@@ -43,7 +48,8 @@ public class Main {
 		}
 		System.out.println("Sucsess");
 
-		tryDbStorage();
+		//tryDbStorage();
+		tryFinManager();
 
 	}
 
@@ -85,6 +91,7 @@ public class Main {
 
 	public static void tryFinManager() {
 		DataStore my = new Storage();
+		System.out.println(my.getUserNames());
 		my.addUser(new User("Serg", "111"));
 		my.addUser(new User("First", "222"));
 		my.addUser(new User("Second", "222"));
@@ -92,12 +99,12 @@ public class Main {
 		System.out.println(my.getUserNames());
 		User current = my.getUser("Serg");
 		System.out.println("Accounts before\t" + my.getAccounts(current));
-		current.addAccount(new Account("MyAccount"));
-		current.addAccount(new Account("GreyMoney"));
-		current.addAccount(new Account("legal"));
-		System.out.println(current.getAccounts().get(0));
-		current.addAccount(current.getAccounts().get(0));
-		for (Account acc : current.getAccounts()) {
+		my.addAccount(current, new Account("MyAccount"));
+		my.addAccount(current, new Account("GreyMoney"));
+		my.addAccount(current, new Account("legal"));
+		System.out.println(my.getAccounts(current).iterator().next());
+		my.addAccount(current, my.getAccounts(current).iterator().next());
+		for (Account acc : my.getAccounts(current)) {
 			acc.conduct(new Record(Transfer.DEBIT, BigDecimal.valueOf(1000.0), "salary",
 					new Category()));
 			acc.conduct(new Record(Transfer.CREDIT,
@@ -105,20 +112,26 @@ public class Main {
 					new Category()));
 		}
 		System.out.println("Accounts after\t" + my.getAccounts(current));
-		current.getAccounts().get(2)
-				.escape(current.getAccounts().get(2).getRecords().get(1));
+		Iterator<Account> myAccsIter = my.getAccounts(current).iterator();
+		Iterator<Record> recordIter; 
+		Account currentAcc = myAccsIter.next();
+		currentAcc = myAccsIter.next();
+		currentAcc = myAccsIter.next();
+		recordIter = my.getRecords(currentAcc).iterator();
+		currentAcc.escape(recordIter.next());
 		System.out.println("Accounts very after\t" + my.getAccounts(current));
+		myAccsIter = my.getAccounts(current).iterator();
+		currentAcc = myAccsIter.next();
 		for (int i = 0; i < 20; i++) {
-			current.getAccounts().get(0).conduct(new Record(Transfer.DEBIT,
+			currentAcc.conduct(new Record(Transfer.DEBIT,
 					BigDecimal.valueOf(990900.0), "salary", new Category()));
 			try {
 				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-			}
-			;
+			} catch (InterruptedException e) {}
 
 		}
-		List<Record> toSort = current.getAccounts().get(0).getRecords();
+		List<Record> toSort = new ArrayList<>();
+		toSort.addAll(my.getRecords(currentAcc));
 		Collections.shuffle(toSort);
 		for (Record rec : toSort) {
 			System.out.println(rec.getDate() + " : " + rec.getId());
