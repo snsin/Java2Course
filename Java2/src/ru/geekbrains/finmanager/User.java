@@ -56,7 +56,7 @@ public class User {
 		return name;
 	}
 
-	public List<Account> getAccounts() {
+/*	public List<Account> getAccounts() {
 		return accounts;
 	}
 
@@ -74,7 +74,7 @@ public class User {
 			result = account;
 		}
 		return result;
-	}
+	}*/
 
 	public int getUserId() {
 		return userId;
