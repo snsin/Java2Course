@@ -1,4 +1,4 @@
-package ru.geekbrains.finmanager;
+package ru.geekbrains.finmanager.models;
 
 import java.math.BigDecimal;
 import java.sql.Date;

@@ -1,4 +1,4 @@
-package ru.geekbrains.finmanager;
+package ru.geekbrains.finmanager.models;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;

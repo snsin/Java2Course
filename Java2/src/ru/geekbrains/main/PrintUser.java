@@ -1,10 +1,10 @@
 package ru.geekbrains.main;
 
-import ru.geekbrains.finmanager.Account;
-import ru.geekbrains.finmanager.DataStore;
-import ru.geekbrains.finmanager.Record;
-import ru.geekbrains.finmanager.Storage;
-import ru.geekbrains.finmanager.User;
+import ru.geekbrains.finmanager.models.Account;
+import ru.geekbrains.finmanager.models.DataStore;
+import ru.geekbrains.finmanager.models.Record;
+import ru.geekbrains.finmanager.models.Storage;
+import ru.geekbrains.finmanager.models.User;
 
 public class PrintUser {
 	DataStore storage = new Storage();

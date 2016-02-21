@@ -1,4 +1,4 @@
-package ru.geekbrains.finmanager;
+package ru.geekbrains.finmanager.models;
 
 import java.util.Arrays;
 import java.util.HashSet;
