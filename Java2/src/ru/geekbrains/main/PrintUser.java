@@ -18,10 +18,11 @@ public class PrintUser {
 		System.out.println("hahahaha");
 		System.out.println(user.getName());
 		for (Account acc : storage.getAccounts(user)) {
-			System.out.printf("%" + user.getName().length() + "s\n", acc);
+			int allign = 10 +  acc.toString().length();
+			System.out.printf("%" + allign + "s\n", acc);
 			for (Record rec : storage.getRecords(acc)) {
-				System.out.printf("%" + user.getName().length() 
-						+ acc.toString().length() + "s\n", rec);
+				int recAllign = 20 + rec.toString().length();
+				System.out.printf("%" + recAllign + "s\n", rec);
 			}
 		}
 	}

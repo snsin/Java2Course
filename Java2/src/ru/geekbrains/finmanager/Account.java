@@ -28,14 +28,14 @@ public class Account implements JdbcCrud<Account> {
 		this.balance = balance;
 	}
 
-	public boolean conduct(Record transaction) {
+	boolean conduct(Record transaction) {
 		BigDecimal amount = 
 				transaction.getAmount().multiply(BigDecimal.valueOf(transaction.sign()));
 		balance = balance.add(amount);
 		return true;
 	}
 
-	public Record escape(Record record) {
+	Record escape(Record record) {
 		BigDecimal amount =
 				record.getAmount().multiply(BigDecimal.valueOf(record.sign()));
 		balance = balance.subtract(amount);

@@ -102,25 +102,26 @@ public class Main {
 		System.out.println(my.getAccounts(current));
 		my.addAccount(current, my.getAccounts(current).iterator().next());
 		for (Account acc : my.getAccounts(current)) {
-			acc.conduct(new Record(Transfer.DEBIT, BigDecimal.valueOf(1000.0), "salary",
+			my.addRecord(acc, new Record(Transfer.DEBIT, BigDecimal.valueOf(1000.0), "salary",
 					new Category()));
-			acc.conduct(new Record(Transfer.CREDIT,
+			my.addRecord(acc, new Record(Transfer.CREDIT,
 					BigDecimal.valueOf(rnd.nextInt(10000) * rnd.nextDouble()), "present",
 					new Category()));
 		}
-		System.out.println("Accounts after\t" + my.getAccounts(current));
+		PrintUser printer = new PrintUser(my);
+		printer.printUser(current);
 		Iterator<Account> myAccsIter = my.getAccounts(current).iterator();
 		Iterator<Record> recordIter; 
 		Account currentAcc = myAccsIter.next();
 		currentAcc = myAccsIter.next();
 		currentAcc = myAccsIter.next();
 		recordIter = my.getRecords(currentAcc).iterator();
-		currentAcc.escape(recordIter.next());
+		my.removeRecord(currentAcc, recordIter.next());
 		System.out.println("Accounts very after\t" + my.getAccounts(current));
 		myAccsIter = my.getAccounts(current).iterator();
 		currentAcc = myAccsIter.next();
 		for (int i = 0; i < 20; i++) {
-			currentAcc.conduct(new Record(Transfer.DEBIT,
+			my.addRecord(currentAcc,new Record(Transfer.DEBIT,
 					BigDecimal.valueOf(990900.0), "salary", new Category()));
 			try {
 				Thread.sleep(1000);
@@ -131,12 +132,12 @@ public class Main {
 		toSort.addAll(my.getRecords(currentAcc));
 		Collections.shuffle(toSort);
 		for (Record rec : toSort) {
-			System.out.println(rec.getDate() + " : " + rec.getId());
+			System.out.println(rec.getDate().getTime() + " : " + rec.getId());
 		}
 		Collections.sort(toSort, new RecordDateComparator());
 		System.out.println("Sorted!");
 		for (Record rec : toSort) {
-			System.out.println(rec.getDate() + " : " + rec.getId());
+			System.out.println(rec.getDate().getTime() + " : " + rec.getId());
 		}
 
 	}
