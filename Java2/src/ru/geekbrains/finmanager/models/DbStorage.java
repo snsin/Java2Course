@@ -104,7 +104,7 @@ public class DbStorage implements DataStore {
 			ResultSet res = stm.executeQuery();
 			while (res.next()) {
 				result.add(new Record(res.getInt(1), Transfer.getTransfer(res.getInt(2)),
-						res.getDate(3), res.getBigDecimal(4), res.getString(5),
+						res.getTimestamp(3), res.getBigDecimal(4), res.getString(5),
 						getCategory(res.getInt(1))));
 			}
 			conn.commit();
@@ -190,7 +190,7 @@ public class DbStorage implements DataStore {
 			PreparedStatement stm = conn.prepareStatement(sqlQuery);
 			stm.setInt(1, account.getId());
 			stm.setInt(2, record.sign());
-			stm.setDate(3, record.getDate());
+			stm.setTimestamp(3, record.getDate());
 			stm.setBigDecimal(4, record.getAmount());
 			stm.setString(5, record.getDescription());
 			stm.executeUpdate();
