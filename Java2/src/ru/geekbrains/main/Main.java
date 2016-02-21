@@ -44,17 +44,41 @@ public class Main {
 		 * "Pills"); System.out.println(cat.getName() + " " +
 		 * cat.getDescription());
 		 */
-		try {
-			System.out.println("Trying JDBC");
-			Class.forName("org.postgresql.Driver");
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		}
-		System.out.println("Sucsess");
 
 		//tryDbStorage();
-		tryFinManager();
+		//tryFinManager();
+		tryDateComparator();
+		
 
+	}
+
+	private static void tryDateComparator() {
+		DataStore my = new DbStorage();
+		User current = my.getUser("Serg");
+		System.out.println(my.getAccounts(current));
+		Account maxRecN = my.getAccounts(current).iterator().next();
+		int maxR = 0;
+		for (Account acc : my.getAccounts(current)) {
+			int currSize = my.getRecords(acc).size();
+			if ( currSize > maxR ){
+				maxR = currSize;
+				maxRecN = acc;
+			}
+		} 
+		PrintUser printer = new PrintUser(my);
+		printer.printUser(current);
+		List<Record> toSort = new ArrayList<>();
+		toSort.addAll(my.getRecords(maxRecN));
+		Collections.shuffle(toSort);
+		for (Record rec : toSort) {
+			System.out.println(rec.getDate() + " : " + rec.getId());
+		}
+		Collections.sort(toSort, new RecordDateComparator());
+		System.out.println("Sorted!");
+		for (Record rec : toSort) {
+			System.out.println(rec.getDate() + " : " + rec.getId());
+		}
+		
 	}
 
 	public static void tryDbStorage() {
@@ -139,12 +163,12 @@ public class Main {
 		toSort.addAll(my.getRecords(currentAcc));
 		Collections.shuffle(toSort);
 		for (Record rec : toSort) {
-			System.out.println(rec.getDate().getTime() + " : " + rec.getId());
+			System.out.println(rec.getDate() + " : " + rec.getId());
 		}
 		Collections.sort(toSort, new RecordDateComparator());
 		System.out.println("Sorted!");
 		for (Record rec : toSort) {
-			System.out.println(rec.getDate().getTime() + " : " + rec.getId());
+			System.out.println(rec.getDate() + " : " + rec.getId());
 		}
 
 	}
