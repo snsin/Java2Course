@@ -15,7 +15,6 @@ public class Account implements JdbcCrud<Account> {
 	private final int accountId;
 	private String description = "";
 	private BigDecimal balance = BigDecimal.ZERO;
-	private List<Record> records = new LinkedList<>();
 
 	public Account(String description) {
 		if (description != null) {
@@ -36,7 +35,6 @@ public class Account implements JdbcCrud<Account> {
 		BigDecimal amount = 
 				transaction.getAmount().multiply(BigDecimal.valueOf(transaction.sign()));
 		balance = balance.add(amount);
-		records.add(transaction);
 		return true;
 	}
 
