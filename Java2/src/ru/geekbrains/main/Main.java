@@ -11,6 +11,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
+import ru.geekbrains.finmanager.DbHelper;
 import ru.geekbrains.finmanager.models.Account;
 import ru.geekbrains.finmanager.models.Category;
 import ru.geekbrains.finmanager.models.DataStore;
@@ -25,14 +26,14 @@ import ru.geekbrains.hw1.*;
 public class Main {
 	public static final Random rnd = new Random();
 
-	private static String user = "test_user";
+/*	private static String user = "test_user";
 	private static String password = "12345";
 	private static String url = "jdbc:postgresql://localhost:5432/test_db";
 	private static String driver = "org.postgresql.Driver";
 
 	public static Connection getConnection() throws SQLException {
 		return DriverManager.getConnection(url, user, password);
-	}
+	}*/
 
 	public static void main(String[] args) {
 
@@ -101,7 +102,7 @@ public class Main {
 		}
 		my.addRecord(salaryAcc, rub1000);
 		accIter = my.getAccounts(currentUser).iterator();
-		try (Connection conn = getConnection()) {
+		try (Connection conn = DbHelper.getConnection()) {
 			while (accIter.hasNext()) {
 				Account account = (Account) accIter.next();
 				account.update(conn);
