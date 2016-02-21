@@ -10,14 +10,11 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class User {
-	private static final String[] NAMES = { "users", // Table name
-			"users.id", // Column names
-			"users.login", "users.pass" };
 	private int userId;
 	private String name;
 	private String passHash;
 	private boolean loggedIn = false;
-	private List<Account> accounts = new LinkedList<>();
+
 
 	public User(String name, String passHash) {
 		this.userId = 0;
@@ -55,26 +52,6 @@ public class User {
 	public String getName() {
 		return name;
 	}
-
-/*	public List<Account> getAccounts() {
-		return accounts;
-	}
-
-	public boolean addAccount(Account account) {
-		boolean isNewAcc = !this.accounts.contains(account);
-		if (isNewAcc) {
-			this.accounts.add(account);
-		}
-		return isNewAcc;
-	}
-
-	public Account removeAccount(Account account) {
-		Account result = null;
-		if (accounts.remove(account)) {
-			result = account;
-		}
-		return result;
-	}*/
 
 	public int getUserId() {
 		return userId;

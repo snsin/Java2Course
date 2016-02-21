@@ -13,7 +13,7 @@ public class PrintUser {
 		}
 	}
 	void printUser(User user) {
-
+		System.out.println("hahahaha");
 
 	}
 

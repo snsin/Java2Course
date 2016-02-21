@@ -55,10 +55,6 @@ public class Account implements JdbcCrud<Account> {
 		return balance;
 	}
 
-/*	public List<Record> getRecords() {
-		return records;
-	}*/
-
 	@Override
 	public int hashCode() {
 		return accountId;
