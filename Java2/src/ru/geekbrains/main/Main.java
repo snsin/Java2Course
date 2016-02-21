@@ -47,19 +47,10 @@ public class Main {
 	public static void tryDbStorage() {
         DataStore my = new DbStorage();
         System.out.println(my.getUserNames());
-        my.addUser(new User("Serg", "111"));
-        System.out.println(my.getUserNames());
-        my.addUser(new User("First", "222"));
-        System.out.println(my.getUserNames());
-        my.addUser(new User("Second", "222"));
-        System.out.println(my.getUserNames());
-        my.addUser(new User("Serg", "23322"));
-        System.out.println(my.getUserNames());
-        User current = my.getUser("Serg");	
-        System.out.println(current.getName() + "\t" + current.getUserId());
-//        my.addAccount(current, new Account("salary"));
-        Account salaryAcc = my.getAccounts(current).iterator().next();
-        System.out.println(my.getAccounts(current));
+        User currentUser = my.getUser("Serg");	
+        System.out.println(currentUser.getName() + "\t" + currentUser.getUserId());
+        Account salaryAcc = my.getAccounts(currentUser).iterator().next();
+        System.out.println(my.getAccounts(currentUser));
         Record rub1000 = new Record(Transfer.DEBIT, BigDecimal.valueOf(1000.0), "salary for month", 
                     new Category());
         Record rub9000 = new Record(Transfer.DEBIT, BigDecimal.valueOf(9000.0), "salary for month", 
@@ -67,12 +58,12 @@ public class Main {
         
         my.addRecord(salaryAcc, rub9000);
         
-        Iterator<Account> accIter = my.getAccounts(current).iterator();
+        Iterator<Account> accIter = my.getAccounts(currentUser).iterator();
         while (accIter.hasNext()) {
             salaryAcc = accIter.next();
         }
         my.addRecord(salaryAcc, rub1000);
-        accIter = my.getAccounts(current).iterator();
+        accIter = my.getAccounts(currentUser).iterator();
         try (Connection conn = getConnection()) {
             while (accIter.hasNext()) {
                 Account account = (Account) accIter.next();
@@ -84,7 +75,7 @@ public class Main {
             e.printStackTrace();
         }
         
-        System.out.println(my.getAccounts(current));
+        System.out.println(my.getAccounts(currentUser));
         
         //Set<Account> accs = my.getAccounts(current);
 	}
