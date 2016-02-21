@@ -1,11 +1,19 @@
 package ru.geekbrains.main;
 
+import ru.geekbrains.finmanager.DataStore;
+import ru.geekbrains.finmanager.Storage;
 import ru.geekbrains.finmanager.User;
 
 public class PrintUser {
-	static void printUser(User user) {
-		System.out.println(user.getName());
-		System.out.println(user.);
+	DataStore storage = new Storage();
+	
+	PrintUser(DataStore storage) {
+		if (storage != null) {
+			this.storage = storage;
+		}
+	}
+	void printUser(User user) {
+
 
 	}
 
