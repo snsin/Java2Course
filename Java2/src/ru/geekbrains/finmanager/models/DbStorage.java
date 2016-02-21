@@ -183,9 +183,7 @@ public class DbStorage implements DataStore {
 		}
 		String sqlQuery = "INSERT INTO records(account_id, transfer, date, "
 				+ "amount, description)" + " VALUES (?, ?, ?, ?, ?);";
-		if (!account.conduct(record)) {
-			return;
-		}
+		account.conduct(record);
 		try (Connection conn = getConnection()) {
 			conn.setAutoCommit(false);
 
@@ -196,6 +194,7 @@ public class DbStorage implements DataStore {
 			stm.setBigDecimal(4, record.getAmount());
 			stm.setString(5, record.getDescription());
 			stm.executeUpdate();
+			account.update(conn);
 			conn.commit();
 		} catch (SQLException e) {
 			account.escape(record);

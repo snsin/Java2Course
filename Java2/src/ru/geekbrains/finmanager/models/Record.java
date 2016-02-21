@@ -1,12 +1,12 @@
 package ru.geekbrains.finmanager.models;
 
 import java.math.BigDecimal;
-import java.sql.Date;
+import java.sql.Timestamp;;
 
 public final class Record {
 	private int recordId;
 	private final Transfer transfer;
-	private final Date date;
+	private final Timestamp date;
 	private final BigDecimal amount;
 	private final String description;
 	private final Category category;
@@ -16,12 +16,12 @@ public final class Record {
 		this.transfer = transfer;
 		this.amount = amount;
 		this.description = description;
-		this.date = new Date(System.currentTimeMillis());
+		this.date = new Timestamp(System.currentTimeMillis());
 		this.recordId = super.hashCode();
 		this.category = category;
 	}
 
-	Record(int id, Transfer transfer, Date date, BigDecimal amount, String description,
+	Record(int id, Transfer transfer, Timestamp date, BigDecimal amount, String description,
 			Category category) {
 		this.transfer = transfer;
 		this.amount = amount;
@@ -39,8 +39,8 @@ public final class Record {
 		return amount;
 	}
 
-	public Date getDate() {
-		return new Date(date.getTime());
+	public Timestamp getDate() {
+		return new Timestamp(date.getTime());
 	}
 
 	public int getId() {

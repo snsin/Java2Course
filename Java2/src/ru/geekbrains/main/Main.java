@@ -94,7 +94,7 @@ public class Main {
 	}
 
 	public static void tryFinManager() {
-		DataStore my = new Storage();
+		DataStore my = new DbStorage();
 		System.out.println(my.getUserNames());
 		my.addUser(new User("Serg", "111"));
 		my.addUser(new User("First", "222"));
