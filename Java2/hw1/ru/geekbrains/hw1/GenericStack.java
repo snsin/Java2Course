@@ -6,13 +6,14 @@ public class GenericStack<E> implements Stack<E> {
 	private static final int DEFAULT_STACK_SIZE = 16;
 	private E[] stack;
 	private int topOfStack = 0;
-	
+
 	@SuppressWarnings("unchecked")
-	public GenericStack(){
+	public GenericStack() {
 		this.stack = (E[]) new Object[DEFAULT_STACK_SIZE];
 	}
+
 	@SuppressWarnings("unchecked")
-	GenericStack(int size){
+	GenericStack(int size) {
 		this.stack = (E[]) new Object[size];
 	}
 
@@ -23,14 +24,14 @@ public class GenericStack<E> implements Stack<E> {
 		} else {
 			throw new StackException("Stack is full");
 		}
-		
+
 	}
 
 	@Override
 	public E pop() throws StackException {
 		if (topOfStack < 1) {
 			throw new StackException("Stack is empty");
-		} else { 
+		} else {
 			return stack[--topOfStack];
 		}
 	}
@@ -59,13 +60,13 @@ public class GenericStack<E> implements Stack<E> {
 	public void pushAll(Collection<? extends E> src) throws StackException {
 		for (E elem : src) {
 			push(elem);
-		}	
+		}
 	}
 
 	@Override
 	public void popAll(Collection<? super E> dst) throws StackException {
 		int counter = dst.size();
-		while (counter-- > 0){
+		while (counter-- > 0) {
 			dst.add(pop());
 		}
 	}

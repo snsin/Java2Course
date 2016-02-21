@@ -5,7 +5,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-public class Storage implements DataStore{
+public class Storage implements DataStore {
 	private Map<String, User> users = new HashMap<>();
 
 	@Override
@@ -35,14 +35,14 @@ public class Storage implements DataStore{
 
 	@Override
 	public void addUser(User user) {
-		if (! users.containsKey(user.getName())) {
+		if (!users.containsKey(user.getName())) {
 			users.put(user.getName(), user);
-		}	
+		}
 	}
 
 	@Override
 	public void addAccount(User user, Account account) {
-			user.addAccount(account);
+		user.addAccount(account);
 	}
 
 	@Override
