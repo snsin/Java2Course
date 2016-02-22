@@ -241,7 +241,7 @@ public class DbStorage implements DataStore {
 	private Category getCategory(int recordId) {
 		Category result = new Category();
 		String sqlQuery = "SELECT categories.name, categories.description "
-				+ "FROM categories WHERE categories.record_id = ?;";
+				+ "FROM categories WHERE categories.id = ?;";
 		try {
 			conn.setAutoCommit(false);
 			PreparedStatement stm = conn.prepareStatement(sqlQuery);
@@ -254,6 +254,12 @@ public class DbStorage implements DataStore {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		return result;
+	}
+	
+	private boolean addCategory() {
+		boolean result = true;
+		
 		return result;
 	}
 

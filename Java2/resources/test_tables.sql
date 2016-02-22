@@ -22,14 +22,10 @@ CREATE TABLE IF NOT EXISTS public.records (
 	transfer integer CHECK(transfer = -1 OR transfer = 1),
 	date timestamp,
 	amount numeric,
-	description text
+	description text,
+	category_name text,
+	category_description text
 	
 );
 
-
-CREATE TABLE IF NOT EXISTS public.categories (
-	id integer references public.records,
-	name text,
-	description text
-);
 
