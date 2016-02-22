@@ -15,7 +15,6 @@ public class PrintUser {
 		}
 	}
 	void printUser(User user) {
-		System.out.println("hahahaha");
 		System.out.println(user.getName());
 		for (Account acc : storage.getAccounts(user)) {
 			int allign = 10 +  acc.toString().length();

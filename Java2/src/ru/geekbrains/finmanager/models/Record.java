@@ -65,5 +65,13 @@ public final class Record {
 	public Category getCategory() {
 		return category;
 	}
+	
+	@Override
+	public String toString() {
+		String result = date.toString() + "\t" + amount + "\t"
+				+ description + "\t" + category.getName();
+		return result;
+		
+	}
 
 }

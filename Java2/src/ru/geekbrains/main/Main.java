@@ -117,35 +117,6 @@ public class Main {
 		}
 		PrintUser printer = new PrintUser(my);
 		printer.printUser(current);
-		Iterator<Account> myAccsIter = my.getAccounts(current).iterator();
-		Iterator<Record> recordIter; 
-		Account currentAcc = myAccsIter.next();
-		currentAcc = myAccsIter.next();
-		currentAcc = myAccsIter.next();
-		recordIter = my.getRecords(currentAcc).iterator();
-		my.removeRecord(currentAcc, recordIter.next());
-		System.out.println("Accounts very after\t" + my.getAccounts(current));
-		myAccsIter = my.getAccounts(current).iterator();
-		currentAcc = myAccsIter.next();
-		for (int i = 0; i < 20; i++) {
-			my.addRecord(currentAcc,new Record(Transfer.DEBIT,
-					BigDecimal.valueOf(990900.0), "salary", new Category()));
-			try {
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {}
-
-		}
-		List<Record> toSort = new ArrayList<>();
-		toSort.addAll(my.getRecords(currentAcc));
-		Collections.shuffle(toSort);
-		for (Record rec : toSort) {
-			System.out.println(rec.getDate() + " : " + rec.getId());
-		}
-		Collections.sort(toSort, new RecordDateComparator());
-		System.out.println("Sorted!");
-		for (Record rec : toSort) {
-			System.out.println(rec.getDate() + " : " + rec.getId());
-		}
 
 	}
 
