@@ -4,12 +4,10 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashSet;
-import java.util.Set;
 
-public class Account implements JdbcCrud<Account> {
+
+public class Account /*implements JdbcCrud<Account>*/ {
 	private int accountId = 0;
 	private String description = "";
 	private BigDecimal balance = BigDecimal.ZERO;
@@ -68,7 +66,26 @@ public class Account implements JdbcCrud<Account> {
 		return description + "\t: " + balance.setScale(2, RoundingMode.HALF_UP);
 	}
 
-	@Override
+	public boolean update(Connection conn) {
+		boolean result = true;
+		String sqlQuery = "UPDATE ONLY accounts" + " SET balance = ?, description = ?"
+				+ " WHERE id = ?;";
+		try {
+			conn.setAutoCommit(false);
+			PreparedStatement stm = conn.prepareStatement(sqlQuery);
+			stm.setBigDecimal(1, balance);
+			stm.setString(2, description);
+			stm.setInt(3, getId());
+			result = (stm.executeUpdate() == 1);
+			conn.commit();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			result = false;
+		}
+		return result;
+	}
+
+/*	@Override
 	public boolean create(Connection conn, int userId) {
 		boolean result = false;
 		String sqlQuery = "INSERT INTO accounts(user_id, balance, description)"
@@ -109,25 +126,6 @@ public class Account implements JdbcCrud<Account> {
 		return result;
 	}
 
-	@Override
-	public boolean update(Connection conn) {
-		boolean result = true;
-		String sqlQuery = "UPDATE ONLY accounts" + " SET balance = ?, description = ?"
-				+ " WHERE id = ?;";
-		try {
-			conn.setAutoCommit(false);
-			PreparedStatement stm = conn.prepareStatement(sqlQuery);
-			stm.setBigDecimal(1, balance);
-			stm.setString(2, description);
-			stm.setInt(3, getId());
-			result = (stm.executeUpdate() == 1);
-			conn.commit();
-		} catch (SQLException e) {
-			e.printStackTrace();
-			result = false;
-		}
-		return result;
-	}
 
 	@Override
 	public boolean delete(Connection conn) {
@@ -144,5 +142,5 @@ public class Account implements JdbcCrud<Account> {
 			result = false;
 		}
 		return result;
-	}
+	}*/
 }
