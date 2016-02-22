@@ -1,8 +1,3 @@
-drop table public.categories;
-drop table public.records;
-drop table public.accounts;
-drop table public.users;
-
 CREATE TABLE IF NOT EXISTS public.users (
 	id SERIAL PRIMARY KEY,
 	login TEXT NOT NULL UNIQUE,
