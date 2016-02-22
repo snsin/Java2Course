@@ -1,11 +1,8 @@
 package ru.geekbrains.finmanager.models;
 
 import java.math.BigDecimal;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.util.Set;;
+
 
 public final class Record {
 	private int recordId;
