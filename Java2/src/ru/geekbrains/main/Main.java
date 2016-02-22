@@ -2,7 +2,6 @@ package ru.geekbrains.main;
 
 import java.math.BigDecimal;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -18,7 +17,6 @@ import ru.geekbrains.finmanager.models.DataStore;
 import ru.geekbrains.finmanager.models.DbStorage;
 import ru.geekbrains.finmanager.models.Record;
 import ru.geekbrains.finmanager.models.RecordDateComparator;
-import ru.geekbrains.finmanager.models.Storage;
 import ru.geekbrains.finmanager.models.Transfer;
 import ru.geekbrains.finmanager.models.User;
 import ru.geekbrains.hw1.*;
@@ -30,7 +28,7 @@ public class Main {
 		tryFinManager();
 	}
 
-	private static void tryDateComparator() {
+	public static void tryDateComparator() {
 		DataStore my = new DbStorage();
 		User current = my.getUser("Serg");
 		System.out.println(my.getAccounts(current));
