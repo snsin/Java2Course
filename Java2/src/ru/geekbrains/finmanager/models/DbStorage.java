@@ -86,7 +86,8 @@ public class DbStorage implements DataStore {
 	public Set<Record> getRecords(Account account) {
 		Set<Record> result = new HashSet<>();
 		String sqlQuery = "SELECT records.id, records.transfer, records.date,"
-				+ " records.amount, records.description"
+				+ " records.amount, records.description, records.category_name,"
+				+ " records.category_description"
 				+ " FROM records WHERE account_id = ?;";
 		try {
 			conn.setAutoCommit(false);
@@ -96,7 +97,7 @@ public class DbStorage implements DataStore {
 			while (res.next()) {
 				result.add(new Record(res.getInt(1), Transfer.getTransfer(res.getInt(2)),
 						res.getTimestamp(3), res.getBigDecimal(4), res.getString(5),
-						getCategory(res.getInt(1))));
+						new Category(res.getString(6), res.getString(7))));
 			}
 			conn.commit();
 		} catch (SQLException e) {
@@ -151,8 +152,9 @@ public class DbStorage implements DataStore {
 		if (getRecords(account).contains(record)) {
 			return;
 		}
-		String sqlQuery = "INSERT INTO records(account_id, transfer, date, "
-				+ "amount, description)" + " VALUES (?, ?, ?, ?, ?);";
+		String sqlQuery = "INSERT INTO records(account_id, transfer, date,"
+				+ " amount, description, category_name, category_description)" 
+				+ " VALUES (?, ?, ?, ?, ?, ?, ?);";
 		account.conduct(record);
 		try {
 			conn.setAutoCommit(false);
@@ -163,6 +165,8 @@ public class DbStorage implements DataStore {
 			stm.setTimestamp(3, record.getDate());
 			stm.setBigDecimal(4, record.getAmount());
 			stm.setString(5, record.getDescription());
+			stm.setString(6, record.getCategory().getName());
+			stm.setString(7, record.getCategory().getDescription());
 			stm.executeUpdate();
 			account.update(conn);
 			conn.commit();
@@ -235,31 +239,6 @@ public class DbStorage implements DataStore {
 				e.printStackTrace();
 			}
 		}
-		return result;
-	}
-
-	private Category getCategory(int recordId) {
-		Category result = new Category();
-		String sqlQuery = "SELECT categories.name, categories.description "
-				+ "FROM categories WHERE categories.id = ?;";
-		try {
-			conn.setAutoCommit(false);
-			PreparedStatement stm = conn.prepareStatement(sqlQuery);
-			stm.setInt(1, recordId);
-			ResultSet res = stm.executeQuery();
-			if (res.next()) {
-				result = new Category(res.getString(1), res.getString(2));
-			}
-			conn.commit();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return result;
-	}
-	
-	private boolean addCategory() {
-		boolean result = true;
-		
 		return result;
 	}
 
