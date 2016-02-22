@@ -27,17 +27,9 @@ CREATE TABLE IF NOT EXISTS public.records (
 );
 
 
-
-
-create table if not exists public.categories_names (
-	id SERIAL PRIMARY KEY,
-	name text NOT NULL UNIQUE
-);
-
 CREATE TABLE IF NOT EXISTS public.categories (
-	id SERIAL PRIMARY KEY,
-	record_id integer references public.records,
-	name text references public.categories_names (name),
+	id integer references public.records,
+	name text,
 	description text
 );
 
