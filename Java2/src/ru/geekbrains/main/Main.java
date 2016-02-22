@@ -26,31 +26,8 @@ import ru.geekbrains.hw1.*;
 public class Main {
 	public static final Random rnd = new Random();
 
-/*	private static String user = "test_user";
-	private static String password = "12345";
-	private static String url = "jdbc:postgresql://localhost:5432/test_db";
-	private static String driver = "org.postgresql.Driver";
-
-	public static Connection getConnection() throws SQLException {
-		return DriverManager.getConnection(url, user, password);
-	}*/
-
 	public static void main(String[] args) {
-
-		// tryStack();
-		// tryLengthComp();
-		// tryFinManager();
-		/*
-		 * Category.addCategory("Health"); Category cat = new Category("heaLth",
-		 * "Pills"); System.out.println(cat.getName() + " " +
-		 * cat.getDescription());
-		 */
-
-		//tryDbStorage();
 		tryFinManager();
-		//tryDateComparator();
-		
-
 	}
 
 	private static void tryDateComparator() {
