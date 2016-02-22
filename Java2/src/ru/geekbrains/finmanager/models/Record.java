@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.Set;;
 
-public final class Record implements JdbcCrud<Record>{
+public final class Record {
 	private int recordId;
 	private final Transfer transfer;
 	private final Timestamp date;
@@ -69,44 +69,4 @@ public final class Record implements JdbcCrud<Record>{
 		return category;
 	}
 
-	@Override
-	public boolean create(Connection conn, int id) {
-		boolean result = true;
-		String sqlQuery = "INSERT INTO records(account_id, transfer, date, "
-				+ "amount, description)" + " VALUES (?, ?, ?, ?, ?);";
-		try {
-			conn.setAutoCommit(false);
-
-			PreparedStatement stm = conn.prepareStatement(sqlQuery);
-			stm.setInt(1, id);
-			stm.setInt(2, this.sign());
-			stm.setTimestamp(3, this.getDate());
-			stm.setBigDecimal(4, this.getAmount());
-			stm.setString(5, this.getDescription());
-			stm.executeUpdate();
-			conn.commit();
-		} catch (SQLException e) {
-			e.printStackTrace();
-			result = false;
-		}
-		return result;
-	}
-
-	@Override
-	public Set<Record> read(Connection conn, int id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public boolean update(Connection conn) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean delete(Connection conn) {
-		// TODO Auto-generated method stub
-		return false;
-	}
 }
