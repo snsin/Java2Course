@@ -14,35 +14,21 @@ import ru.geekbrains.finmanager.DbHelper;
 
 public class DbStorage implements DataStore {
 
-/*	private String user = "test_user";
-	private String password = "12345";
-	private String url = "jdbc:postgresql://localhost:5432/test_db";
-	private String driver = "org.postgresql.Driver";
-
-	private Connection getConnection() throws SQLException {
-		return DriverManager.getConnection(url, user, password);
-	}
-	*/
 	Connection conn = null;
 	public DbStorage() {
 		try {
 			this.conn = DbHelper.getConnection();
 		} catch (SQLException e) {
 			e.printStackTrace();
-			DbHelper.closeConnection();
 		}
 	}
 
-
-	// TODO rewrite classes add id parametr to constructor args
-	// TODO change table to provide unique user name and make drop_all.sql
-	// which delete all tables
 	@Override
 	public User getUser(String name) {
 		User result = null;
 		String sqlQuery = "SELECT users.id, users.login, users.pass "
 				+ "FROM users WHERE users.login = ?;";
-		try /*(Connection conn = DbHelper.getConnection())*/ {
+		try {
 			conn.setAutoCommit(false);
 			PreparedStatement stm = conn.prepareStatement(sqlQuery);
 			stm.setString(1, name);
@@ -61,7 +47,7 @@ public class DbStorage implements DataStore {
 	public Set<String> getUserNames() {
 		Set<String> result = new HashSet<>();
 		String sqlQuery = "SELECT users.login FROM users;";
-		try /*(Connection conn = DbHelper.getConnection())*/ {
+		try {
 			conn.setAutoCommit(false);
 			PreparedStatement stm = conn.prepareStatement(sqlQuery);
 			ResultSet res = stm.executeQuery();
@@ -80,7 +66,7 @@ public class DbStorage implements DataStore {
 		Set<Account> result = new HashSet<>();
 		String sqlQuery = "SELECT accounts.id, accounts.balance, accounts.description"
 				+ " FROM accounts WHERE user_id = ?;";
-		try /*(Connection conn = DbHelper.getConnection())*/ {
+		try {
 			conn.setAutoCommit(false);
 			PreparedStatement stm = conn.prepareStatement(sqlQuery);
 			stm.setInt(1, owner.getUserId());
@@ -102,7 +88,7 @@ public class DbStorage implements DataStore {
 		String sqlQuery = "SELECT records.id, records.transfer, records.date,"
 				+ " records.amount, records.description"
 				+ " FROM records WHERE account_id = ?;";
-		try /*(Connection conn = DbHelper.getConnection())*/ {
+		try {
 			conn.setAutoCommit(false);
 			PreparedStatement stm = conn.prepareStatement(sqlQuery);
 			stm.setInt(1, account.getId());
@@ -119,35 +105,14 @@ public class DbStorage implements DataStore {
 		return result;
 	}
 
-	private Category getCategory(int recordId) {
-		Category result = new Category();
-		String sqlQuery = "SELECT categories.name, categories.description "
-				+ "FROM categories WHERE categories.record_id = ?;";
-		try /*(Connection conn = DbHelper.getConnection())*/ {
-			conn.setAutoCommit(false);
-			PreparedStatement stm = conn.prepareStatement(sqlQuery);
-			stm.setInt(1, recordId);
-			ResultSet res = stm.executeQuery();
-			if (res.next()) {
-				result = new Category(res.getString(1), res.getString(2));
-			}
-			conn.commit();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return result;
-	}
-
 	@Override
 	public void addUser(User user) {
-		/*
-		 * if (!signedUsers.add(user.getName())) { return; }
-		 */
+
 		if (getUser(user.getName()) != null) {
 			return;
 		}
 		String sqlQuery = "INSERT INTO users(login, pass)" + " VALUES (?, ?);";
-		try /*(Connection conn = DbHelper.getConnection())*/ {
+		try  {
 			conn.setAutoCommit(false);
 			PreparedStatement stm = conn.prepareStatement(sqlQuery);
 			stm.setString(1, user.getName());
@@ -167,7 +132,7 @@ public class DbStorage implements DataStore {
 		}
 		String sqlQuery = "INSERT INTO accounts(user_id, balance, description)"
 				+ " VALUES (?, ?, ?);";
-		try /*(Connection conn = DbHelper.getConnection())*/ {
+		try {
 			conn.setAutoCommit(false);
 			PreparedStatement stm = conn.prepareStatement(sqlQuery);
 			stm.setInt(1, user.getUserId());
@@ -189,7 +154,7 @@ public class DbStorage implements DataStore {
 		String sqlQuery = "INSERT INTO records(account_id, transfer, date, "
 				+ "amount, description)" + " VALUES (?, ?, ?, ?, ?);";
 		account.conduct(record);
-		try /*(Connection conn = DbHelper.getConnection())*/ {
+		try {
 			conn.setAutoCommit(false);
 
 			PreparedStatement stm = conn.prepareStatement(sqlQuery);
@@ -209,20 +174,87 @@ public class DbStorage implements DataStore {
 
 	@Override
 	public User removeUser(String name) {
-		// TODO Auto-generated method stub
-		return null;
+		User result =  getUser(name);
+		if (getUserNames().contains(name)) {
+			result = getUser(name);
+		}
+		if (result != null) {
+			String sqlQuery = "DELETE FROM users WHERE users.id = ?";
+			try  {
+				conn.setAutoCommit(false);
+				PreparedStatement stm = conn.prepareStatement(sqlQuery);
+				stm.setInt(1, result.getUserId());
+				stm.executeUpdate();
+				conn.commit();
+			} catch (SQLException e) {
+				e.printStackTrace();
+				result = null;
+			}
+		}
+		return result;
 	}
 
 	@Override
-	public Account removeAccount(User owner, Account account) {
-		// TODO Auto-generated method stub
-		return null;
+	public Account removeAccount(User owner, Account account) { 
+		Account result = null;
+		if (getAccounts(owner).remove(account)) {
+			result = account;
+			String sqlQuery = "DELETE FROM accounts WHERE accounts.id = ?";
+			try  {
+				conn.setAutoCommit(false);
+				PreparedStatement stm = conn.prepareStatement(sqlQuery);
+				stm.setInt(1, account.getId());
+				stm.executeUpdate();
+				conn.commit();
+			} catch (SQLException e) {
+				e.printStackTrace();
+				result = null;
+			}
+		}
+		return result;
 	}
 
 	@Override
 	public Record removeRecord(Account from, Record record) {
-		// TODO Auto-generated method stub
-		return null;
+		Record result = null;
+		if (getRecords(from).remove(record)) {
+			result = record;
+			String sqlQuery = "DELETE FROM records WHERE records.id = ?;";
+			from.escape(record);
+			try {
+				conn.setAutoCommit(false);
+	
+				PreparedStatement stm = conn.prepareStatement(sqlQuery);
+				stm.setInt(1, record.getId());
+				stm.setInt(2, record.sign());
+				from.update(conn);
+				conn.commit();
+			} catch (SQLException e) {
+				from.conduct(record);
+				result = null;
+				e.printStackTrace();
+			}
+		}
+		return result;
+	}
+
+	private Category getCategory(int recordId) {
+		Category result = new Category();
+		String sqlQuery = "SELECT categories.name, categories.description "
+				+ "FROM categories WHERE categories.record_id = ?;";
+		try {
+			conn.setAutoCommit(false);
+			PreparedStatement stm = conn.prepareStatement(sqlQuery);
+			stm.setInt(1, recordId);
+			ResultSet res = stm.executeQuery();
+			if (res.next()) {
+				result = new Category(res.getString(1), res.getString(2));
+			}
+			conn.commit();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return result;
 	}
 
 }
