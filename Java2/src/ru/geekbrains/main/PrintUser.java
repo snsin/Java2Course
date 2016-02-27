@@ -15,6 +15,9 @@ public class PrintUser {
 		}
 	}
 	void printUser(User user) {
+		if (user == null) {
+			System.out.println("null");
+		}
 		System.out.println(user.getName() + " pass:\t" + user.getPassHash());
 		for (Account acc : storage.getAccounts(user)) {
 			int allign = 10 +  acc.toString().length();
