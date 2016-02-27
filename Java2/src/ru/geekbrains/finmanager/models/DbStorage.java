@@ -114,7 +114,7 @@ public class DbStorage implements DataStore {
 			conn.setAutoCommit(false);
 			PreparedStatement stm = conn.prepareStatement(sqlQuery);
 			stm.setString(1, user.getName());
-			stm.setString(2, user.getName());
+			stm.setString(2, user.getPassHash());
 			stm.executeUpdate();
 			conn.commit();
 		} catch (SQLException e) {
