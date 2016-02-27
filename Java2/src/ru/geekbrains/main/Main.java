@@ -11,12 +11,16 @@ import java.util.List;
 import java.util.Random;
 
 import ru.geekbrains.finmanager.DbHelper;
+import ru.geekbrains.finmanager.controllers.LogIn;
+import ru.geekbrains.finmanager.controllers.PassMD5;
+import ru.geekbrains.finmanager.controllers.SignIn;
 import ru.geekbrains.finmanager.models.Account;
 import ru.geekbrains.finmanager.models.Category;
 import ru.geekbrains.finmanager.models.DataStore;
 import ru.geekbrains.finmanager.models.DbStorage;
 import ru.geekbrains.finmanager.models.Record;
 import ru.geekbrains.finmanager.models.RecordDateComparator;
+import ru.geekbrains.finmanager.models.Storage;
 import ru.geekbrains.finmanager.models.Transfer;
 import ru.geekbrains.finmanager.models.User;
 import ru.geekbrains.hw1.*;
@@ -25,9 +29,26 @@ public class Main {
 	public static final Random rnd = new Random();
 
 	public static void main(String[] args) {
-		tryFinManager();
+		tryWithSignIn();
 	}
 
+	public static void tryWithSignIn() {
+		DataStore my = new DbStorage();
+		System.out.println(my.getUserNames());
+		SignIn creator = new SignIn(new PassMD5(), my);
+		creator.createUser("TestFoo", "BaR");
+		PrintUser printer = new PrintUser(my);
+		for (String  name : my.getUserNames()) {
+			User current = my.getUser(name);
+			printer.printUser(current);
+		}
+		
+		LogIn loginManager = new LogIn(new PassMD5(), my);
+		System.out.println(loginManager.login("TestFoo", "BaR"));
+		printer.printUser(loginManager.login("TestFoo", "BaR"));
+
+	}
+	
 	public static void tryDateComparator() {
 		DataStore my = new DbStorage();
 		User current = my.getUser("Serg");
