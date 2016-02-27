@@ -58,9 +58,9 @@ public class DbHelper {
 				+ "	transfer integer CHECK(transfer = -1 OR transfer = 1),"
 				+ "	date timestamp,"
 				+ "	amount numeric,"
-				+ "	description text),"
+				+ "	description text,"
 				+ " category_name text,"
-				+ " category_description text;");
+				+ " category_description text);");
 		stm.executeUpdate();	
 		
 	}
