@@ -58,20 +58,10 @@ public class DbHelper {
 				+ "	transfer integer CHECK(transfer = -1 OR transfer = 1),"
 				+ "	date timestamp,"
 				+ "	amount numeric,"
-				+ "	description text);");
-		stm.executeUpdate();
-		
-		stm = conn.prepareStatement("create table if not exists public.categories_names ("
-				+ "	id SERIAL PRIMARY KEY,"
-				+ "	name text NOT NULL UNIQUE);");
-		stm.executeUpdate();
-		
-		stm = conn.prepareStatement("CREATE TABLE IF NOT EXISTS public.categories ("
-				+ "	id SERIAL PRIMARY KEY,"
-				+ "	record_id integer references public.records,"
-				+ "	name text references public.categories_names (name),"
-				+ "	description text);");
-		stm.executeUpdate();
+				+ "	description text),"
+				+ " category_name text,"
+				+ " category_description text;");
+		stm.executeUpdate();	
 		
 	}
 

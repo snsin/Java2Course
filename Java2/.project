@@ -30,25 +30,5 @@
 			<type>1</type>
 			<locationURI>PARENT-5-PROJECT_LOC/media/smac/DATA/JAVA2/less3/C2-2016-02-22T20_10_02.pdf</locationURI>
 		</link>
-		<link>
-			<name>docs/less1</name>
-			<type>2</type>
-			<locationURI>virtual:/virtual</locationURI>
-		</link>
-		<link>
-			<name>docs/less2</name>
-			<type>2</type>
-			<locationURI>virtual:/virtual</locationURI>
-		</link>
-		<link>
-			<name>docs/less1/C0-2016-01-29T22_05_54.pdf</name>
-			<type>1</type>
-			<locationURI>PARENT-5-PROJECT_LOC/media/smac/DATA/JAVA2/less1/C0-2016-01-29T22_05_54.pdf</locationURI>
-		</link>
-		<link>
-			<name>docs/less2/C1-2016-02-12T16_11_27.pdf</name>
-			<type>1</type>
-			<locationURI>PARENT-5-PROJECT_LOC/media/smac/DATA/JAVA2/less2/C1-2016-02-12T16_11_27.pdf</locationURI>
-		</link>
 	</linkedResources>
 </projectDescription>
