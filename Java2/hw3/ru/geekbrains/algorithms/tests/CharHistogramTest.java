@@ -30,6 +30,7 @@ public class CharHistogramTest {
 		assertNull(CharHistogram.hist(nullStr));
 	}
 	
+	@Test
 	public void testEmpty() {
 		assertEquals(0, CharHistogram.hist(emptyStr).size());
 	}
