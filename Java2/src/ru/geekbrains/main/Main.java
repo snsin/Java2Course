@@ -10,6 +10,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
+import javax.swing.JDialog;
+import javax.swing.JFrame;
+
 import ru.geekbrains.finmanager.DbHelper;
 import ru.geekbrains.finmanager.controllers.LogIn;
 import ru.geekbrains.finmanager.controllers.PassMD5;
@@ -23,15 +26,23 @@ import ru.geekbrains.finmanager.models.RecordDateComparator;
 import ru.geekbrains.finmanager.models.Storage;
 import ru.geekbrains.finmanager.models.Transfer;
 import ru.geekbrains.finmanager.models.User;
+import ru.geekbrains.finmanager.views.LoginView;
 import ru.geekbrains.hw1.*;
 
 public class Main {
 	public static final Random rnd = new Random();
 
 	public static void main(String[] args) {
-		tryWithSignIn();
+		tryGui();
 	}
 
+	public static void tryGui() {
+		JDialog loginDialog = new JDialog();
+		loginDialog.setSize(300, 130);
+		loginDialog.getContentPane().add(new LoginView());
+		loginDialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+		loginDialog.setVisible(true);
+	}
 	public static void tryWithSignIn() {
 		DataStore my = new DbStorage();
 		System.out.println(my.getUserNames());
