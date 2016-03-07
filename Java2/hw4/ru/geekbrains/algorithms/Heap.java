@@ -17,6 +17,15 @@ public class Heap<T extends Comparable<T>> {
 		heap = (T[]) new Object[size];
 	}
 	
+	public Heap(T[] arr) {
+		heap = arr;
+		heapSize = arr.length;
+		for (int i = ((heapSize - 1) / 2); i >= 0; i--) {
+			maxHeapify(i);
+		}
+		
+	}
+	
 	public int getSize() {
 		return heapSize;
 	}
