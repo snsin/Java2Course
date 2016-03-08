@@ -67,6 +67,11 @@ public class Heap<K extends Comparable<K>> {
 		return heap[0];
 	}
 	
+	//TODO This method is only for debug purpose
+	K[] getAsAray() {
+		return heap;
+	}
+
 	private int parent(int i) {
 		return (i - 1) / 2;
 	}
@@ -110,11 +115,6 @@ public class Heap<K extends Comparable<K>> {
 	@SuppressWarnings("unchecked")
 	private K[] createArray(int size){
 		return (K[]) new Integer[size];
-	}
-	
-	//TODO remove its only to debug
-	K[] getAsAray() {
-		return heap;
 	}
 
 }
