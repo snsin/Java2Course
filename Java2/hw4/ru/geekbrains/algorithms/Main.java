@@ -1,37 +1,32 @@
 package ru.geekbrains.algorithms;
 
-import java.util.HashMap;
+import java.util.Random;
 
 public class Main {
+	static Random rnd = new Random();
 
 	public static void main(String[] args) {
-		Integer[] arr = {1,10,12,2,4,7,8};
-		for (Integer integer : arr) {
-			System.out.print(integer + " ");
-		}
-		System.out.println();
+
+		HeapQueue<Integer, String> h = new HeapQueue<>();
 		
-		Heap<Integer> h = new Heap<>(arr);
-		for (Integer integer : h.getAsAray()) {
-			System.out.print(integer + " ");
+		for (int i = 0; i < 20; i++) {
+			Integer val = rnd.nextInt(300);
+			h.insert(val, "s" + val.toString());
 		}
-		System.out.println();
 		
-		h.insert(43);
+		h.insert(43, "One");
 	
-		for (Integer integer : h.getAsAray()) {
-			System.out.print(integer + " ");
-		}
 		System.out.println();
 		
-		h.insert(11);
+		h.insert(11, "Two");
 		
-		for (Integer integer : h.getAsAray()) {
-			System.out.print(integer + " ");
-		}
 		System.out.println();
 		
-		new HashMap<String, Integer>();
+		String value;
+		while ((value = h.getMax()) != null){
+			System.out.println(value);
+		}
+		
 
 	}
 
