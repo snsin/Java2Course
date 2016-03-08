@@ -2,7 +2,7 @@ package ru.geekbrains.algorithms;
 
 import java.util.Map;
 
-public class Main {
+public class TestAlgo3 {
 
 	public static void main(String[] args) {
 		String str = "kjdsla;jn vjkpanejuipnvdajnfcxzlvjnbiwapeufusdfjkl"

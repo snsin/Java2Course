@@ -2,19 +2,16 @@ package ru.geekbrains.algorithms;
 
 public class Heap<T extends Comparable<T>> {
 	public static final int DEFAULT_SIZE = 16;
-	
 	private int heapSize = 0;
 	private T[] heap;
 	
-	@SuppressWarnings("unchecked")
 	public Heap() {
-		heap = (T[]) new Object[DEFAULT_SIZE];
+		heap = (T[]) createArray(DEFAULT_SIZE);
 	}
 	
-	@SuppressWarnings("unchecked")
 	public Heap(int size) {
 		size = size < DEFAULT_SIZE ? DEFAULT_SIZE : size;
-		heap = (T[]) new Object[size];
+		heap = (T[]) createArray(size);
 	}
 	
 	public Heap(T[] arr) {
@@ -57,10 +54,13 @@ public class Heap<T extends Comparable<T>> {
 	}
 
 	void insert(T elem){
+		int i = heapSize;
 		incrementSize();
-		heap[heapSize - 1] = heap[0];
-		heap[0] = elem;
-		maxHeapify(0);
+		heap[i] = elem;
+		while ((i > 0) && (heap[parent(i)].compareTo(heap[i]) < 0)) {
+			swap(parent(i), i);
+			i = parent(i);
+		}
 	}
 
 	T getMax() {
@@ -102,10 +102,19 @@ public class Heap<T extends Comparable<T>> {
 	}
 
 	private void increaseSize() {
-		@SuppressWarnings("unchecked")
-		T[] newHeap = (T[]) new Object[heap.length + DEFAULT_SIZE];
+		T[] newHeap = createArray(heap.length + DEFAULT_SIZE);
 		System.arraycopy(heap, 0, newHeap, 0, heap.length);
 		heap = newHeap;
+	}
+	
+	@SuppressWarnings("unchecked")
+	private T[] createArray(int size){
+		return (T[]) new Integer[size];
+	}
+	
+	//TODO remove its only to debug
+	T[] getAsAray() {
+		return heap;
 	}
 
 }
