@@ -1,20 +1,20 @@
 package ru.geekbrains.algorithms;
 
-public class Heap<T extends Comparable<T>> {
+public class Heap<K extends Comparable<K>> {
 	public static final int DEFAULT_SIZE = 16;
 	private int heapSize = 0;
-	private T[] heap;
+	private K[] heap;
 	
 	public Heap() {
-		heap = (T[]) createArray(DEFAULT_SIZE);
+		heap = (K[]) createArray(DEFAULT_SIZE);
 	}
 	
 	public Heap(int size) {
 		size = size < DEFAULT_SIZE ? DEFAULT_SIZE : size;
-		heap = (T[]) createArray(size);
+		heap = (K[]) createArray(size);
 	}
 	
-	public Heap(T[] arr) {
+	public Heap(K[] arr) {
 		heap = arr;
 		heapSize = arr.length;
 		for (int i = ((heapSize - 1) / 2); i >= 0; i--) {
@@ -43,8 +43,8 @@ public class Heap<T extends Comparable<T>> {
 		}
 	}
 
-	T extractMax() {
-		T result = null;
+	K extractMax() {
+		K result = null;
 		if (heapSize > 0) {
 			result = heap[0];
 			heap[0] = heap[--heapSize];
@@ -53,7 +53,7 @@ public class Heap<T extends Comparable<T>> {
 		return result;
 	}
 
-	void insert(T elem){
+	void insert(K elem){
 		int i = heapSize;
 		incrementSize();
 		heap[i] = elem;
@@ -63,7 +63,7 @@ public class Heap<T extends Comparable<T>> {
 		}
 	}
 
-	T getMax() {
+	K getMax() {
 		return heap[0];
 	}
 	
@@ -85,7 +85,7 @@ public class Heap<T extends Comparable<T>> {
 	
 	private void swap(int i, int k) {
 		if (i != k) {
-			T temp = heap[i];
+			K temp = heap[i];
 			heap[i] = heap[k];
 			heap[k] = temp;
 		}
@@ -102,18 +102,18 @@ public class Heap<T extends Comparable<T>> {
 	}
 
 	private void increaseSize() {
-		T[] newHeap = createArray(heap.length + DEFAULT_SIZE);
+		K[] newHeap = createArray(heap.length + DEFAULT_SIZE);
 		System.arraycopy(heap, 0, newHeap, 0, heap.length);
 		heap = newHeap;
 	}
 	
 	@SuppressWarnings("unchecked")
-	private T[] createArray(int size){
-		return (T[]) new Integer[size];
+	private K[] createArray(int size){
+		return (K[]) new Integer[size];
 	}
 	
 	//TODO remove its only to debug
-	T[] getAsAray() {
+	K[] getAsAray() {
 		return heap;
 	}
 
