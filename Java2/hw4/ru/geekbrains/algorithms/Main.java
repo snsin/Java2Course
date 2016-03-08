@@ -1,5 +1,7 @@
 package ru.geekbrains.algorithms;
 
+import java.util.HashMap;
+
 public class Main {
 
 	public static void main(String[] args) {
@@ -28,6 +30,8 @@ public class Main {
 			System.out.print(integer + " ");
 		}
 		System.out.println();
+		
+		new HashMap<String, Integer>();
 
 	}
 
