@@ -41,7 +41,7 @@ public class HeapQueue<K extends Comparable<K>, T> implements PriorityQueue<K, T
 	public void insert(K key, T elem){
 		int i = heapSize;
 		incrementSize();
-		heap[i] = new Pair();
+//		heap[i] = new Pair();
 		heap[i].value = elem;
 		heap[i].key = key;
 		while ((i > 0) && (heap[parent(i)].key.compareTo(heap[i].key) < 0)) {
@@ -114,7 +114,11 @@ public class HeapQueue<K extends Comparable<K>, T> implements PriorityQueue<K, T
 	@SuppressWarnings("unchecked")
 	private Pair[] createArray(int size){
 		Pair dummy = new Pair();
-		return (Pair[]) Array.newInstance(dummy.getClass(), size);
+		Pair[] result = (Pair[]) Array.newInstance(dummy.getClass(), size);
+		for (int i = 0; i < result.length; i++) {
+			result[i] = new Pair();
+		}
+		return result;
 	}
 	
 }
