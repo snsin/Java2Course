@@ -1,5 +1,7 @@
 package ru.geekbrains.algorithms;
 
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Random;
 
 public class Main {
@@ -27,7 +29,17 @@ public class Main {
 			System.out.println(value);
 		}
 		
-
+		Collection<Integer> srcColl = Arrays.asList(1, 2, 3);
+		MyMap test = new MyMap();
+		System.out.println(srcColl);
+		System.out.println(test.map(srcColl, 
+				new Operator<Integer, Integer>() {
+					@Override
+					public Integer apply(Integer t) {
+						return t*t;
+					}
+		}));
+		System.out.println(srcColl);
 	}
 
 }
