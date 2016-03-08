@@ -26,7 +26,36 @@ public class HeapQueue<K extends Comparable<K>, T> implements PriorityQueue<K, T
 		return heapSize;
 	}
 
-	void maxHeapify (int i) {
+	@Override
+	public T getMax() {
+		T result = null;
+		if (heapSize > 0) {
+			result = heap[0].value;
+			heap[0] = heap[--heapSize];
+			maxHeapify(0);
+		}
+		return result;
+	}
+
+	@Override
+	public void insert(K key, T elem){
+		int i = heapSize;
+		incrementSize();
+		heap[i] = new Pair();
+		heap[i].value = elem;
+		heap[i].key = key;
+		while ((i > 0) && (heap[parent(i)].key.compareTo(heap[i].key) < 0)) {
+			swap(parent(i), i);
+			i = parent(i);
+		}
+	}
+	
+
+	public T pickMax() {
+		return heap[0].value;
+	}
+	
+	private void maxHeapify (int i) {
 		int left = left(i);
 		int right = rigth(i);
 		int largest = -1;
@@ -42,33 +71,6 @@ public class HeapQueue<K extends Comparable<K>, T> implements PriorityQueue<K, T
 		}
 	}
 
-	T extractMax() {
-		T result = null;
-		if (heapSize > 0) {
-			result = heap[0].value;
-			heap[0] = heap[--heapSize];
-			maxHeapify(0);
-		}
-		return result;
-	}
-
-	@Override
-	public void insert(K key, T elem){
-		int i = heapSize;
-		incrementSize();
-		heap[i].value = elem;
-		heap[i].key = key;
-		while ((i > 0) && (heap[parent(i)].key.compareTo(heap[i].key) < 0)) {
-			swap(parent(i), i);
-			i = parent(i);
-		}
-	}
-	
-	@Override
-	public T getMax() {
-		return heap[0].value;
-	}
-	
 	private int parent(int i) {
 		return (i - 1) / 2;
 	}
@@ -115,12 +117,4 @@ public class HeapQueue<K extends Comparable<K>, T> implements PriorityQueue<K, T
 		return (Pair[]) Array.newInstance(dummy.getClass(), size);
 	}
 	
-	//TODO remove its only to debug
-	K[] getAsAray() {
-		K[] result = (K[]) new Integer[heap.length];
-		for (int i = 0; i < result.length; i++) {
-			result[i] = heap[i].key;
-		}
-		return result;
-	}
 }
