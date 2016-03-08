@@ -41,7 +41,6 @@ public class HeapQueue<K extends Comparable<K>, T> implements PriorityQueue<K, T
 	public void insert(K key, T elem){
 		int i = heapSize;
 		incrementSize();
-//		heap[i] = new Pair();
 		heap[i].value = elem;
 		heap[i].key = key;
 		while ((i > 0) && (heap[parent(i)].key.compareTo(heap[i].key) < 0)) {
