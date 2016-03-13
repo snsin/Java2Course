@@ -12,13 +12,17 @@ public class BinarySearch {
 				int cmp = key.compareTo(arr[lowBound + gap]);
 				if (cmp > 0) {
 					lowBound += gap;
+					result = -1 * highBound - 1;
 				} else if (cmp < 0) {
 					highBound -= gap;
+					result = -1 * lowBound - 1;
 				} else {
 					result = lowBound + gap;
 					break;
 				}
+				
 			} while (gap > 0);
+			
 			
 		}
 		return result;
