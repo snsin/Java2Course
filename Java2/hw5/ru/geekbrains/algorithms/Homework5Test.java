@@ -17,7 +17,7 @@ public class Homework5Test {
 			bestCaseArr[i] = rnd.nextInt(max);
 		}
 		stupidArr = new int[] {0, 100 * max};
-		bigArr = new Double[1000000];
+		bigArr = new Double[1000001];
 		for (int i = 0; i < bigArr.length; i++) {
 			bigArr[i] = rnd.nextDouble();
 		}
@@ -40,24 +40,18 @@ public class Homework5Test {
 		printArr(CountingSort.sort(stupidArr));*/
 		bigArr[bigArr.length - 1] = Double.valueOf(0.5);
 		Arrays.sort(bigArr);
-		long statrNanotime;
-		long stopNanotime;
-		statrNanotime = System.nanoTime();
 		int index = new BinarySearch().search(bigArr, bigArr[0]);
-		stopNanotime = System.nanoTime();
-		System.out.println(stopNanotime - statrNanotime);
 		System.out.println(index);
 		if (index >= 0) {
 			printPart(bigArr, index, 5);
+			System.out.println(bigArr[index]);
 		}
-		statrNanotime = System.nanoTime();
-		for (Double d : bigArr) {
-			if (d.compareTo(Double.valueOf(0.5)) == 0) {
-				break;
-			}
+		index = new BinarySearch().search(bigArr, bigArr[bigArr.length - 1]);
+		System.out.println(index);
+		if (index >= 0) {
+			printPart(bigArr, index, 5);
+			System.out.println(bigArr[index]);
 		}
-		stopNanotime = System.nanoTime();
-		System.out.println(stopNanotime - statrNanotime);
 	}
 
 	public static void printArr(int[] arr) {
