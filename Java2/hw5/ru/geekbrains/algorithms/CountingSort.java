@@ -26,8 +26,12 @@ public class CountingSort {
 		int result[] = null;
 		if (srcArray != null && srcArray.length > 0) {
 			int helperLength = max(srcArray);
-			result = helperLength < 0 ? null : new int[helperLength+1];
-			Arrays.fill(result, 0);
+			if (helperLength < 0 ) {
+				result = null;
+			} else {
+				result = new int[helperLength+1];
+				Arrays.fill(result, 0);
+			}
 		}
 		return result;
 	}
