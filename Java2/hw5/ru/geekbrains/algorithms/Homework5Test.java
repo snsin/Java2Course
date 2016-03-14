@@ -3,6 +3,8 @@ package ru.geekbrains.algorithms;
 import java.util.Arrays;
 import java.util.Random;
 
+import ru.geekbrains.helper.SortedChecker;
+
 public class Homework5Test {
 	static Random rnd;
 	static int[] bestCaseArr;
@@ -52,6 +54,8 @@ public class Homework5Test {
 			printPart(bigArr, index, 5);
 			System.out.println(bigArr[index]);
 		}
+		
+		/*SortedChecker.isSorted((long[])arr);*/
 	}
 
 	public static void printArr(int[] arr) {
