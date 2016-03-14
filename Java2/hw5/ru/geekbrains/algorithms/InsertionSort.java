@@ -10,7 +10,7 @@ public class InsertionSort {
 					array[i + 1] = array[i];
 					i--;
 				}
-				array[i] = key;
+				array[i + 1] = key;
 			} 
 		}
 	}
